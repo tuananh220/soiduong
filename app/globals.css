@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FDFBF7;
+  color: #1C1A17;
+}
+
+::selection {
+  background-color: #D4AF37;
+  color: #1C1A17;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 3px;
+}
+
+/* Card tilt perspective helper */
+.tilt-wrap {
+  perspective: 1000px;
+}
+
+/* Quote card flip */
+.flip-scene {
+  perspective: 1400px;
+}
+.flip-card {
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  backface-visibility: hidden;
+}
+.flip-face-back {
+  transform: rotateY(180deg);
+}

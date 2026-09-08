@@ -1,0 +1,57 @@
+[
+  {
+    "id": "q1",
+    "prompt": "Bạn vừa mất một cơ hội việc làm mơ ước vì thiếu một kỹ năng nhỏ. Theo tinh thần tự học của Bác, bạn nên:",
+    "options": [
+      { "id": "a", "text": "Tự trách bản thân và bỏ cuộc với ngành này", "correct": false },
+      { "id": "b", "text": "Xác định đúng kỹ năng còn thiếu và tự học ngay trong 30 ngày tới", "correct": true },
+      { "id": "c", "text": "Đổ lỗi cho nhà tuyển dụng khắt khe", "correct": false },
+      { "id": "d", "text": "Chờ cơ hội khác dễ dàng hơn", "correct": false }
+    ],
+    "explain": "Bác từng tự học tiếng Anh, Pháp, Nga... ngay trong lúc làm những công việc chân tay vất vả nhất. Thất bại chỉ ra lỗ hổng, không định nghĩa con người bạn."
+  },
+  {
+    "id": "q2",
+    "prompt": "Nhóm dự án của bạn có hai thành viên bất đồng gay gắt về hướng đi. Cách tiếp cận gần với tinh thần \"đoàn kết\" nhất là:",
+    "options": [
+      { "id": "a", "text": "Để hai bên tự giải quyết, mình đứng ngoài", "correct": false },
+      { "id": "b", "text": "Đứng về phía người quen thân hơn", "correct": false },
+      { "id": "c", "text": "Lắng nghe cả hai, tìm điểm chung trong mục tiêu để dung hòa khác biệt", "correct": true },
+      { "id": "d", "text": "Biểu quyết đa số rồi thôi", "correct": false }
+    ],
+    "explain": "Năm 1930, Người hợp nhất ba tổ chức có quan điểm khác nhau không phải bằng cách áp đặt, mà bằng cách tìm mẫu số chung lớn hơn mọi khác biệt nhỏ."
+  },
+  {
+    "id": "q3",
+    "prompt": "Cuối tháng bạn hết tiền vì những khoản chi \"nhỏ mà nhiều\" trên ứng dụng mua sắm. Bài học \"Kiệm\" gợi ý bạn nên:",
+    "options": [
+      { "id": "a", "text": "Xoá hết ứng dụng ngân hàng để khỏi thấy số dư", "correct": false },
+      { "id": "b", "text": "Ghi lại chi tiêu một tuần để nhận diện khoản chi không cần thiết", "correct": true },
+      { "id": "c", "text": "Vay bạn bè cho qua tháng rồi tính sau", "correct": false },
+      { "id": "d", "text": "Không quan tâm, tháng sau lại có lương", "correct": false }
+    ],
+    "explain": "Kiệm không phải là hà tiện, mà là chi tiêu có ý thức và có kế hoạch — bước đầu tiên luôn là nhìn thẳng vào số liệu thật."
+  },
+  {
+    "id": "q4",
+    "prompt": "Bạn vô tình thấy một bài viết hay và muốn đăng lại. Ứng xử \"Liêm\" trên không gian mạng là:",
+    "options": [
+      { "id": "a", "text": "Đăng lại nguyên văn, không ghi nguồn vì \"ai cũng làm vậy\"", "correct": false },
+      { "id": "b", "text": "Ghi rõ nguồn gốc hoặc xin phép tác giả trước khi chia sẻ", "correct": true },
+      { "id": "c", "text": "Sửa vài chữ rồi nhận là bài của mình", "correct": false },
+      { "id": "d", "text": "Chụp màn hình xoá tên tác giả", "correct": false }
+    ],
+    "explain": "Liêm thời số hoá bắt đầu từ việc tôn trọng công sức trí tuệ của người khác, dù chỉ là một bài đăng ngắn."
+  },
+  {
+    "id": "q5",
+    "prompt": "AI có thể làm giúp bạn gần như trọn vẹn một bài luận. Tinh thần \"dĩ bất biến, ứng vạn biến\" gợi ý bạn nên:",
+    "options": [
+      { "id": "a", "text": "Dùng AI viết toàn bộ, nộp nguyên văn", "correct": false },
+      { "id": "b", "text": "Từ chối dùng AI vì sợ mất tư duy độc lập", "correct": false },
+      { "id": "c", "text": "Dùng AI như công cụ hỗ trợ, nhưng tự mình tư duy, kiểm chứng và chịu trách nhiệm với nội dung cuối cùng", "correct": true },
+      { "id": "d", "text": "Dùng AI rồi đổi vài từ để tránh bị phát hiện", "correct": false }
+    ],
+    "explain": "Công cụ thay đổi liên tục — hôm qua là sách, hôm nay là AI. Cái không đổi là năng lực tư duy độc lập và trách nhiệm với sản phẩm mang tên mình."
+  }
+]
