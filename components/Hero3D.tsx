@@ -6,13 +6,7 @@ import { Float } from "@react-three/drei";
 import { useReducedMotion } from "framer-motion";
 import * as THREE from "three";
 
-/**
- * A procedural "torch" — no external 3D asset needed.
- * A gold flame hovers above a dark base, both tilting gently
- * toward the user's cursor. This stands in for "Soi Đường"
- * (lighting the way) rather than a generic sphere/cube.
- */
-function Compass() {
+function HammerAndSickle() {
   const group = useRef<THREE.Group>(null);
   const { pointer } = useThree();
   const shouldReduceMotion = useReducedMotion();
@@ -45,50 +39,62 @@ function Compass() {
       >
         <group rotation={[0.35, -0.2, 0]}>
           <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <cylinderGeometry args={[0.92, 0.92, 0.18, 64]} />
+            <cylinderGeometry args={[0.94, 0.94, 0.16, 64]} />
             <meshStandardMaterial
-              color="#1C1A17"
-              roughness={0.32}
-              metalness={0.72}
+              color="#8B0000"
+              roughness={0.28}
+              metalness={0.45}
             />
           </mesh>
           <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 0.11]}>
-            <torusGeometry args={[0.78, 0.055, 16, 64]} />
+            <torusGeometry args={[0.8, 0.045, 16, 64]} />
             <meshStandardMaterial
               color="#D4AF37"
               roughness={0.2}
               metalness={0.85}
             />
           </mesh>
-          <mesh rotation={[0, 0, Math.PI / 4]} position={[0, 0, 0.18]}>
-            <coneGeometry args={[0.09, 1.1, 3]} />
-            <meshStandardMaterial
-              color="#D71920"
-              emissive="#5E0000"
-              emissiveIntensity={0.28}
-              roughness={0.3}
-              metalness={0.25}
-            />
-          </mesh>
-          <mesh rotation={[0, 0, -Math.PI / 4]} position={[0, 0, 0.19]}>
-            <coneGeometry args={[0.09, 1.1, 3]} />
+          {/* Hammer handle and head. */}
+          <mesh rotation={[0, 0, -Math.PI / 4]} position={[-0.08, 0.02, 0.2]}>
+            <cylinderGeometry args={[0.065, 0.065, 1.22, 20]} />
             <meshStandardMaterial
               color="#E7CD7A"
-              roughness={0.28}
-              metalness={0.35}
+              emissive="#8A6A18"
+              emissiveIntensity={0.22}
+              roughness={0.3}
+              metalness={0.55}
             />
           </mesh>
-          <mesh position={[0, 0, 0.25]}>
-            <sphereGeometry args={[0.13, 24, 24]} />
+          <mesh rotation={[0, 0, -Math.PI / 4]} position={[0.34, 0.42, 0.2]}>
+            <boxGeometry args={[0.28, 0.42, 0.14]} />
             <meshStandardMaterial
               color="#D4AF37"
+              emissive="#8A6A18"
+              emissiveIntensity={0.24}
               roughness={0.2}
-              metalness={0.9}
+              metalness={0.8}
             />
           </mesh>
-          <mesh position={[0, 0.34, 0.2]}>
-            <sphereGeometry args={[0.035, 16, 16]} />
-            <meshBasicMaterial color="#D71920" />
+          {/* Sickle: a curved gold blade with a short handle. */}
+          <mesh rotation={[0, 0, Math.PI / 2]} position={[0.12, -0.02, 0.22]}>
+            <torusGeometry args={[0.53, 0.065, 16, 48, Math.PI * 1.35]} />
+            <meshStandardMaterial
+              color="#D4AF37"
+              emissive="#8A6A18"
+              emissiveIntensity={0.2}
+              roughness={0.2}
+              metalness={0.8}
+            />
+          </mesh>
+          <mesh rotation={[0, 0, Math.PI / 4]} position={[-0.26, -0.31, 0.22]}>
+            <cylinderGeometry args={[0.055, 0.055, 0.52, 20]} />
+            <meshStandardMaterial
+              color="#E7CD7A"
+              emissive="#8A6A18"
+              emissiveIntensity={0.18}
+              roughness={0.3}
+              metalness={0.55}
+            />
           </mesh>
         </group>
       </Float>
@@ -111,7 +117,7 @@ export default function Hero3D() {
     <div
       className="h-[260px] w-full sm:h-[350px] md:h-[420px]"
       role="img"
-      aria-label="Mô hình la bàn 3D tượng trưng cho kim chỉ nam"
+      aria-label="Biểu tượng búa và liềm 3D tượng trưng cho chủ nghĩa xã hội"
     >
       <Canvas
         camera={{ position: [0, 0.4, 4.2], fov: 42 }}
@@ -125,7 +131,7 @@ export default function Hero3D() {
           color="#FDFBF7"
         />
         <Suspense fallback={null}>
-          <Compass />
+          <HammerAndSickle />
         </Suspense>
       </Canvas>
     </div>

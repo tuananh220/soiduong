@@ -22,7 +22,7 @@ soiduong/
 │   └── globals.css       # Token màu nền, reduced-motion, flip-card CSS
 ├── components/
 │   ├── SiteHeader.tsx    # Thanh điều hướng cố định
-│   ├── Hero3D.tsx        # SECTION 1 — la bàn kim chỉ nam 3D (R3F)
+│   ├── Hero3D.tsx        # SECTION 1 — biểu tượng búa và liềm 3D (R3F)
 │   ├── GlobeSection.tsx  # SECTION 2 — quả địa cầu 3D + mốc lịch sử
 │   ├── GenZCards.tsx     # SECTION 3 — thẻ tilt 3D bài học Gen Z
 │   ├── ChallengeSection.tsx # Bọc QuizGame + QuoteGallery
