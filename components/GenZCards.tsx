@@ -82,16 +82,36 @@ export default function GenZCards() {
   return (
     <section id="goc-genz" className="bg-cream px-6 py-20 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-6xl">
-        <p className="font-sans text-sm uppercase tracking-wideish text-burgundy/80">
+        <motion.p
+          className="font-sans text-sm uppercase tracking-wideish text-burgundy/80"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           Ứng dụng thực tiễn
-        </p>
-        <h2 className="mt-3 max-w-xl font-serif text-3xl font-semibold leading-tight text-charcoal sm:text-4xl">
+        </motion.p>
+        <motion.h2
+          className="mt-3 max-w-xl font-serif text-3xl font-semibold leading-tight text-charcoal sm:text-4xl"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           Góc Gen Z: từ tư tưởng đến thói quen
-        </h2>
+        </motion.h2>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {cards.map((card) => (
-            <TiltCard key={card.id} card={card} />
+          {cards.map((card, i) => (
+            <motion.div
+              key={card.id}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.13, ease: "easeOut" }}
+            >
+              <TiltCard card={card} />
+            </motion.div>
           ))}
         </div>
       </div>

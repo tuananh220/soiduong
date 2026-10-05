@@ -1,4 +1,7 @@
+"use client";
+
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
 import GenZCards from "@/components/GenZCards";
 import ChallengeSection from "@/components/ChallengeSection";
@@ -22,20 +25,52 @@ export default function Home() {
           className="pointer-events-none absolute inset-0 bg-radial-fade"
           aria-hidden="true"
         />
-        <div className="relative mx-auto max-w-5xl text-center">
-          <p className="font-sans text-sm uppercase tracking-wideish text-burgundy/80">
+        <motion.div
+          className="relative mx-auto max-w-5xl text-center"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.14 } },
+          }}
+        >
+          <motion.p
+            className="font-sans text-sm uppercase tracking-wideish text-burgundy/80"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+            }}
+          >
             Môn học Tư tưởng Hồ Chí Minh — phiên bản tương tác
-          </p>
-          <h1 className="mx-auto mt-4 max-w-3xl font-serif text-4xl font-semibold leading-tight text-charcoal sm:text-5xl md:text-6xl">
+          </motion.p>
+          <motion.h1
+            className="mx-auto mt-4 max-w-3xl font-serif text-4xl font-semibold leading-tight text-charcoal sm:text-5xl md:text-6xl"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+            }}
+          >
             Kim chỉ nam cho thế hệ trẻ
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl text-charcoal/70">
+          </motion.h1>
+          <motion.p
+            className="mx-auto mt-5 max-w-xl text-charcoal/70"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+            }}
+          >
             Không phải sáu chương giáo trình dàn trải — mà là những giá trị cốt
             lõi, được kể lại theo cách một người trẻ hôm nay có thể mang vào đời
             sống của mình.
-          </p>
+          </motion.p>
 
-          <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-burgundy/20 bg-burgundy/5 px-4 py-3 text-left text-sm leading-relaxed text-charcoal/75 sm:px-6">
+          <motion.div
+            className="mx-auto mt-6 max-w-3xl rounded-2xl border border-burgundy/20 bg-burgundy/5 px-4 py-3 text-left text-sm leading-relaxed text-charcoal/75 sm:px-6"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+            }}
+          >
             <p className="font-medium text-burgundy">Ghi chú lịch sử:</p>
             <p className="mt-1">
               Một số câu nói và bài học ở đây được rút ra từ tư tưởng, lời nói,
@@ -43,11 +78,17 @@ export default function Home() {
               nguyên văn. Mục tiêu là giúp thế hệ trẻ hiểu giá trị và cách vận
               dụng vào đời sống hiện đại một cách đúng mực và có trách nhiệm.
             </p>
-          </div>
+          </motion.div>
 
           <Hero3D />
 
-          <div className="mt-2 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <motion.div
+            className="mt-2 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+            }}
+          >
             <a
               href="#hanh-trinh"
               className="focus-ring rounded-full bg-burgundy px-7 py-3 text-sm font-medium text-cream transition-transform hover:scale-[1.03]"
@@ -60,8 +101,8 @@ export default function Home() {
             >
               Trạm thách thức
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       <GlobeSection />

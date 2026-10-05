@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { Html, Line, OrbitControls, Stars } from "@react-three/drei";
-import { useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 import timeline from "@/data/timeline.json";
@@ -263,6 +263,7 @@ export default function GlobeSection() {
   const controlsRef = useRef<any>(null);
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const shouldReduceMotion = useReducedMotion();
+  const [autoplayEnabled, setAutoplayEnabled] = useState(true);
   const periods = useMemo(
     () => ["Tất cả", ...Array.from(new Set(timeline.map((m) => m.period)))],
     [],
@@ -275,6 +276,11 @@ export default function GlobeSection() {
       ),
     [selectedPeriod],
   );
+  // Ref so the autoplay interval never captures a stale visibleTimeline.
+  const visibleTimelineRef = useRef(visibleTimeline);
+  useEffect(() => {
+    visibleTimelineRef.current = visibleTimeline;
+  }, [visibleTimeline]);
   const activeIndex = Math.max(
     0,
     visibleTimeline.findIndex((milestone) => milestone.id === active.id),
@@ -337,22 +343,53 @@ export default function GlobeSection() {
     [],
   );
 
+  // Autoplay: advance one milestone every 4 s while not paused.
+  useEffect(() => {
+    if (!autoplayEnabled || isPaused) return;
+    const id = setInterval(() => {
+      setActive((prev) => {
+        const vt = visibleTimelineRef.current;
+        const idx = vt.findIndex((m) => m.id === prev.id);
+        return vt[(idx + 1) % vt.length];
+      });
+    }, 4000);
+    return () => clearInterval(id);
+  }, [autoplayEnabled, isPaused]);
+
   return (
     <section
       id="hanh-trinh"
       className="relative bg-charcoal px-6 py-20 text-cream sm:px-10 lg:px-16"
     >
       <div className="mx-auto max-w-6xl">
-        <p className="font-sans text-sm uppercase tracking-wideish text-gold/80">
+        <motion.p
+          className="font-sans text-sm uppercase tracking-wideish text-gold/80"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
           1890 — 1990
-        </p>
-        <h2 className="mt-3 max-w-2xl font-serif text-3xl font-semibold leading-tight sm:text-4xl">
+        </motion.p>
+        <motion.h2
+          className="mt-3 max-w-2xl font-serif text-3xl font-semibold leading-tight sm:text-4xl"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           Hành trình tư duy qua từng vĩ độ
-        </h2>
-        <p className="mt-4 max-w-xl text-cream/70">
+        </motion.h2>
+        <motion.p
+          className="mt-4 max-w-xl text-cream/70"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           Chọn một giai đoạn hoặc mốc thời gian để phân biệt sự kiện lịch sử với
           cách diễn giải dành cho đời sống hôm nay.
-        </p>
+        </motion.p>
 
         <div className="mt-6 max-w-xl" aria-label="Tiến trình hành trình">
           <div className="flex items-center justify-between text-xs text-cream/50">
@@ -375,6 +412,16 @@ export default function GlobeSection() {
                 width: `${((activeIndex + 1) / visibleTimeline.length) * 100}%`,
               }}
             />
+          </div>
+          {/* Autoplay countdown bar — resets animation on every milestone change */}
+          <div className="mt-1 h-[3px] overflow-hidden rounded-full bg-cream/5">
+            {autoplayEnabled && !isPaused && (
+              <div
+                key={`timer-${active.id}`}
+                className="h-full w-full origin-left rounded-full bg-gold/50"
+                style={{ animation: "autoplayTimer 4s linear forwards" }}
+              />
+            )}
           </div>
         </div>
 
@@ -476,6 +523,19 @@ export default function GlobeSection() {
                   Toàn cảnh
                 </button>
               </div>
+              {/* Autoplay toggle */}
+              <button
+                onClick={() => setAutoplayEnabled((v) => !v)}
+                className={`focus-ring rounded-lg border px-3 py-2 text-xs backdrop-blur-sm transition-colors ${
+                  autoplayEnabled
+                    ? "border-gold/50 bg-charcoal/80 text-gold"
+                    : "border-cream/15 bg-charcoal/80 text-cream/50 hover:text-cream"
+                }`}
+                aria-pressed={autoplayEnabled}
+                title={autoplayEnabled ? "Tạm dừng tự động chuyển mốc" : "Bật tự động chuyển mốc"}
+              >
+                {autoplayEnabled ? "⏸\u00a0Tự động" : "▶\u00a0Tự động"}
+              </button>
             </div>
           </div>
 
@@ -638,6 +698,10 @@ export default function GlobeSection() {
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(6px); }
           to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes autoplayTimer {
+          from { transform: scaleX(1); }
+          to   { transform: scaleX(0); }
         }
       `}</style>
     </section>
