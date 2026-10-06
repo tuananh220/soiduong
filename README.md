@@ -25,26 +25,38 @@ soiduong/
 │   ├── ScrollProgress.tsx  # Thanh tiến độ đọc + chấm điều hướng + nút về đầu trang
 │   ├── Hero3D.tsx          # SECTION 1 — biểu tượng búa và liềm 3D (R3F)
 │   ├── GlobeSection.tsx    # SECTION 2 — quả địa cầu 3D + mốc lịch sử
-│   ├── ThoughtSection.tsx  # SECTION 3 — sáu chuyên đề tư tưởng + kiểm chứng trích dẫn
+│   ├── ThoughtSection.tsx  # SECTION 3 — sáu chuyên đề + kiểm chứng trích dẫn
 │   ├── ThoughtLab3D.tsx    #   3D: vòng xoay thẻ chuyên đề (CanvasTexture + Bloom)
-│   ├── GenZCards.tsx       # SECTION 4 — thẻ tilt 3D bài học Gen Z (hỗ trợ cảm ứng)
-│   ├── ChallengeSection.tsx# Bọc QuizGame + QuoteGallery
-│   ├── QuizGame.tsx        # SECTION 5a — 7 câu hỏi tình huống
-│   ├── QuoteGallery.tsx    # SECTION 5b — thẻ trích dẫn lật 3D, lọc theo chuyên đề
-│   └── NotebookSection.tsx # SECTION 6 — sổ tay ôn tập, xuất Markdown / in PDF
+│   ├── QuoteSource.tsx     #   Nguồn trích dẫn + link tra cứu
+│   ├── KnowledgeCards.tsx  # SECTION 4 — 12 thẻ kiến thức nền (flashcard ôn tập)
+│   ├── GenZCards.tsx       # SECTION 5 — thẻ tilt 3D bài học Gen Z
+│   ├── ChallengeSection.tsx# Bọc QuizGame + CitationGame + QuoteGallery
+│   ├── QuizGame.tsx        # SECTION 6a — 7 câu hỏi tình huống
+│   ├── CitationGame.tsx    # SECTION 6b — trò chơi "Câu này của ai?"
+│   ├── QuoteGallery.tsx    # SECTION 6c — thẻ trích dẫn lật 3D, có link nguồn
+│   ├── RoadmapSection.tsx  # SECTION 7 — lộ trình 7 ngày, theo dõi tiến độ
+│   └── NotebookSection.tsx # SECTION 8 — sổ tay ôn tập, xuất Markdown / in PDF
 ├── lib/
 │   ├── notebook.ts         # Store localStorage: trích dẫn, việc nhỏ, ghi chú, đã đọc
 │   └── types.ts            # Type suy ra trực tiếp từ JSON
 ├── data/
-│   ├── tu-tuong.json       # 6 chuyên đề: luận điểm, trích dẫn (có nguồn), ứng dụng, việc nhỏ
+│   ├── tu-tuong.json       # 6 chuyên đề: luận điểm, trích dẫn (nguồn + link), ứng dụng, việc nhỏ
 │   ├── citation-audit.json # 12 trích dẫn thường gặp: đúng nguồn, sai nguồn, dị bản
+│   ├── trot-choi.json      # 14 câu cho trò chơi "Câu này của ai?" + 6 nhãn tác giả
+│   ├── kien-thuc-nen.json  # 12 thẻ flashcard: định nghĩa, cơ sở, 5 thời kỳ, giá trị
+│   ├── lo-trinh.json       # Lộ trình 7 ngày (mỗi ngày 1 chuyên đề + việc nhỏ)
 │   ├── nguon.json          # Chính sách nội dung, tư liệu đối chiếu, giấy phép tài sản
 │   ├── timeline.json       # 13 mốc lịch sử từ 1890 đến 1990
 │   ├── genz-cards.json     # Nội dung 3 thẻ bài học
 │   ├── quiz.json           # 7 câu hỏi tình huống
 │   └── quotes.json         # 8 trích dẫn đã kiểm nguồn
+├── scripts/
+│   └── verify-content.mjs  # Kiểm chứng tự động: nguồn, link, số trang, topicId
+├── .github/workflows/
+│   └── verify-content.yml  # CI: kiểm chứng nội dung → tsc → lint → build
 ├── docs/
-│   └── KIEM-DUYET-NOI-DUNG.md # Ghi chép quá trình kiểm chứng nội dung
+│   ├── KIEM-DUYET-NOI-DUNG.md # Ghi chép quá trình kiểm chứng nội dung
+│   └── REVIEW-3D-TUONG-TAC.md # Rà soát và sửa lỗi tương tác 3D
 ├── tailwind.config.ts      # Token màu: burgundy / cream / gold / charcoal
 ├── next.config.js
 ├── tsconfig.json
@@ -130,7 +142,33 @@ soiduong/
 ## Kiểm tra trước khi triển khai
 
 ```bash
-npx tsc --noEmit    # kiểm tra kiểu
-npm run build       # build production
-npm run lint        # eslint
+npm run verify:content   # kiểm chứng nội dung (nguồn, link, số trang, topicId)
+npm run verify:links     # kiểm tra các link nguồn còn truy cập được
+npx tsc --noEmit         # kiểm tra kiểu
+npm run lint             # eslint
+npm run build            # build production
 ```
+
+`verify:content` chạy trong GitHub Actions (`.github/workflows/verify-content.yml`)
+ở mỗi lần push và pull request, nên nội dung sai nguồn không lọt vào repo. Các bất
+biến được kiểm tra:
+
+1. Mọi trích dẫn đều có `source` và `sourceUrl` để người đọc tự tra cứu.
+2. Không nêu số trang (vì số trang thay đổi giữa các lần in của Hồ Chí Minh toàn tập).
+3. Trích dẫn không phải “Nguyên văn” thì phải có `note` giải thích.
+4. Mỗi mục trong bảng kiểm chứng phải có bằng chứng, cách dùng đúng và link đối chiếu.
+5. Mọi `topicId` trong trích dẫn, trò chơi và lộ trình phải tồn tại trong `tu-tuong.json`.
+
+## Học tập & ôn thi
+
+- **Thẻ kiến thức nền**: 12 flashcard về định nghĩa tư tưởng Hồ Chí Minh, ba cơ sở
+  hình thành (khách quan, lý luận, nhân tố chủ quan), năm thời kỳ phát triển và giá
+  trị tư tưởng; lọc theo nhóm, lưu thẻ vào sổ tay.
+- **Trò chơi “Câu này của ai?”**: 14 câu thuộc 6 nhãn tác giả (Hồ Chí Minh, Thanh
+  Tịnh, Minh Huệ, Lê-nin, Khổng Tử, ca dao). Mỗi vòng 8 câu, lưu kỷ lục trong
+  `localStorage`, sau mỗi câu hiện giải thích kèm link tư liệu đối chiếu.
+- **Lộ trình 7 ngày**: mỗi ngày gắn với một chuyên đề, có việc nhỏ và tự đánh dấu
+  hoàn thành; tiến độ lưu trên máy người đọc.
+- **Link nguồn bấm được**: mọi trích dẫn (30 câu trong chuyên đề và gallery) đều có
+  nút “Xem nguồn ↗”, và mỗi mục kiểm chứng có “Tra cứu tư liệu đối chiếu ↗”. Toàn bộ
+  23 tên miền nguồn được liệt kê trong `verify:content`.  

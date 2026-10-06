@@ -102,3 +102,55 @@ Một số địa chỉ tham khảo cụ thể đã dùng khi biên soạn:
 - Nếu bạn phát hiện một trích dẫn trên trang chưa chuẩn, hãy sửa trực tiếp trong
   `data/tu-tuong.json`, `data/quotes.json` hoặc `data/citation-audit.json` — phần
   giao diện sẽ tự cập nhật.
+
+## 6. Kiểm chứng tự động (từ đợt bổ sung)
+
+Từ khi bổ sung trò chơi, thẻ kiến thức nền và lộ trình 7 ngày, các quy tắc biên soạn
+ở mục 1 được thực thi bằng script thay vì chỉ dựa vào trí nhớ người viết:
+
+```bash
+npm run verify:content   # bất biến nội dung
+npm run verify:links     # kiểm tra link nguồn còn sống
+```
+
+Script (`scripts/verify-content.mjs`) chạy trong CI ở mỗi push/PR và kiểm tra:
+
+- mọi trích dẫn có `source` **và** `sourceUrl`;
+- không nêu số trang trong nguồn;
+- trích dẫn có mức độ khác “Nguyên văn” thì phải có `note` giải thích;
+- mỗi mục kiểm chứng có `evidence`, `correctUsage`, `referenceUrl`;
+- mọi `topicId` (trong trích dẫn, trò chơi, lộ trình) đều tồn tại trong `tu-tuong.json`;
+- trò chơi chỉ được dùng nhãn tác giả nằm trong danh sách `authors` đã kiểm chứng.
+
+Lần chạy đầu tiên đã bắt được một lỗi thật: trích dẫn “Cần, Kiệm, Liêm, Chính…”
+được ghi mức độ “Nguyên văn (diễn giải…)” nhưng thiếu ghi chú — nay đã tách thành
+mức độ “Nguyên văn (diễn giải)” kèm `note` nói rõ đâu là câu khái quát của người
+biên soạn, đâu là nội dung trong tác phẩm 1949.
+
+Bảng dưới đây tổng hợp mức độ nguyên văn của dữ liệu sau đợt bổ sung:
+
+| Loại dữ liệu | Số lượng | Ghi chú |
+| --- | --- | --- |
+| Trích dẫn trong 6 chuyên đề | 22 | đều có nguồn + link tra cứu |
+| Trích dẫn trong bộ sưu tập | 8 | đều có mức độ nguyên văn |
+| Mục kiểm chứng trích dẫn | 12 | có bằng chứng + cách dùng đúng + link |
+| Câu trong trò chơi | 14 | 6 nhãn tác giả, có giải thích từng câu |
+| Thẻ kiến thức nền | 12 | dựa theo giáo trình + văn kiện, có ghi nguồn |
+| Lộ trình | 7 ngày | gắn với `topicId` có thật |
+
+### Nguồn mới dùng cho đợt bổ sung
+
+- Định nghĩa tư tưởng Hồ Chí Minh: Văn kiện Đại hội IX (2001), trình bày lại theo
+  Giáo trình Tư tưởng Hồ Chí Minh (NXB Chính trị quốc gia Sự thật).
+- Ba cơ sở hình thành và năm thời kỳ: Giáo trình Tư tưởng Hồ Chí Minh; đề cương
+  học phần của các trường đại học (HUIT, TMU, Đại học Đà Nẵng) để đối chiếu cách
+  chia mốc 1890–1911 / 1911–1920 / 1920–1930 / 1930–1941 / 1941–1969.
+- “Cần, kiệm, liêm, chính”: Báo Cứu quốc các ngày 30, 31/5 và 1, 2/6/1949, bút danh
+  Lê Quyết Thắng: <https://cand.com.vn/Cong-an/Tac-pham-Can-kiem-liem-chinh-cua-Chu-tich-Ho-Chi-Minh-i467559/>
+- “Cán bộ là gốc của mọi công việc” (Sửa đổi lối làm việc, 10/1947):
+  <https://noichinh.vn/nghien-cuu-trao-doi/202405/tu-tuong-ho-chi-minh-ve-cong-tac-can-bo-den-nay-van-con-nguyen-tinh-thoi-su-313800/>
+- “Học, học nữa, học mãi” — câu của Lê-nin, Bác dẫn lại ngày 6/5/1950:
+  <https://kientho.thanhhoa.gov.vn/van-hoa-xa-hoi/ngay-nay-nam-xua-6-5-bac-ho-can-dan-noi-theo-lenin-hoc-hoc-nua-hoc-mai-684579>
+- “Đêm nay Bác không ngủ” — thơ Minh Huệ (1951), không phải lời của Bác.
+- Toàn văn Di chúc (công bố 1969):
+  <http://hochiminh.vn/hoc-va-lam-theo-bac/di-chuc/toan-van-di-chuc-cua-chu-tich-ho-chiminh-cong-bo-nam-1969-109>

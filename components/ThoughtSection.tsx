@@ -7,6 +7,7 @@ import topics from "@/data/tu-tuong.json";
 import audit from "@/data/citation-audit.json";
 import sources from "@/data/nguon.json";
 import ErrorBoundary from "@/lib/ErrorBoundary";
+import QuoteSource from "./QuoteSource";
 import { useReduceEffects } from "@/lib/prefs";
 import { useInViewState } from "@/lib/useInViewState";
 import {
@@ -97,6 +98,7 @@ function QuoteRow({
   index,
   text,
   source,
+  sourceUrl,
   level,
   note,
 }: {
@@ -104,6 +106,7 @@ function QuoteRow({
   index: number;
   text: string;
   source: string;
+  sourceUrl?: string;
   level: string;
   note?: string;
 }) {
@@ -120,7 +123,12 @@ function QuoteRow({
         <span className="rounded-full border border-burgundy/25 bg-burgundy/5 px-2 py-0.5 font-medium text-burgundy">
           {level}
         </span>
-        <span className="text-charcoal/60">{source}</span>
+        <QuoteSource
+          source={source}
+          sourceUrl={sourceUrl}
+          className="text-charcoal/60"
+          linkClassName="focus-ring font-medium text-burgundy underline decoration-burgundy/30 underline-offset-2 hover:decoration-burgundy"
+        />
       </div>
       {note ? (
         <p className="mt-2 rounded-lg bg-charcoal/5 px-3 py-2 text-[12px] leading-relaxed text-charcoal/70">
@@ -281,6 +289,7 @@ function DetailPanel({
                 index={quoteIndex}
                 text={quote.text}
                 source={quote.source}
+                sourceUrl={"sourceUrl" in quote ? (quote.sourceUrl as string) : undefined}
                 level={quote.level}
                 note={"note" in quote ? (quote.note as string | undefined) : undefined}
               />
@@ -418,6 +427,14 @@ function AuditList() {
             <p className="mt-3 border-l-2 border-gold/60 pl-3 text-[13px] leading-relaxed text-charcoal/75">
               <strong className="font-medium">Cách dùng đúng:</strong> {entry.correctUsage}
             </p>
+            <a
+              href={entry.referenceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring mt-3 inline-block text-[12px] font-medium text-burgundy underline decoration-burgundy/30 underline-offset-2 hover:decoration-burgundy"
+            >
+              Tra cứu tư liệu đối chiếu ↗
+            </a>
           </li>
         ))}
       </ul>

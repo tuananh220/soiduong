@@ -12,8 +12,10 @@ import {
 const SECTIONS = [
   { id: "hanh-trinh", label: "Hành trình" },
   { id: "tu-tuong", label: "Tư tưởng" },
+  { id: "kien-thuc-nen", label: "Ôn tập nền tảng" },
   { id: "goc-genz", label: "Góc Gen Z" },
   { id: "thach-thuc", label: "Thách thức" },
+  { id: "lo-trinh", label: "Lộ trình 7 ngày" },
   { id: "so-tay", label: "Sổ tay" },
 ];
 

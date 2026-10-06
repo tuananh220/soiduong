@@ -14,11 +14,17 @@ export default function SiteHeader() {
         <a href="#tu-tuong" className="focus-ring whitespace-nowrap py-1 hover:text-charcoal">
           Tư tưởng
         </a>
+        <a href="#kien-thuc-nen" className="focus-ring whitespace-nowrap py-1 hover:text-charcoal">
+          Ôn tập
+        </a>
         <a href="#goc-genz" className="focus-ring whitespace-nowrap py-1 hover:text-charcoal">
           Góc Gen Z
         </a>
         <a href="#thach-thuc" className="focus-ring whitespace-nowrap py-1 hover:text-charcoal">
           Thách thức
+        </a>
+        <a href="#lo-trinh" className="focus-ring whitespace-nowrap py-1 hover:text-charcoal">
+          Lộ trình
         </a>
         <a href="#so-tay" className="focus-ring whitespace-nowrap py-1 hover:text-charcoal">
           Sổ tay

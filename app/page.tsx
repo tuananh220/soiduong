@@ -7,6 +7,9 @@ import GenZCards from "@/components/GenZCards";
 import ChallengeSection from "@/components/ChallengeSection";
 import ScrollProgress from "@/components/ScrollProgress";
 import ThoughtSection from "@/components/ThoughtSection";
+import KnowledgeCards from "@/components/KnowledgeCards";
+import CitationGame from "@/components/CitationGame";
+import RoadmapSection from "@/components/RoadmapSection";
 import NotebookSection from "@/components/NotebookSection";
 
 // Các khung 3D chỉ render phía client.
@@ -123,8 +126,10 @@ export default function Home() {
 
       <GlobeSection />
       <ThoughtSection />
+      <KnowledgeCards />
       <GenZCards />
       <ChallengeSection />
+      <RoadmapSection />
       <NotebookSection />
 
       <footer className="bg-cream px-6 py-10 text-center text-xs leading-relaxed text-charcoal/55 sm:px-10 lg:px-16">

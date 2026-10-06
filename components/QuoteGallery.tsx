@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import quotes from "@/data/quotes.json";
 import { removeFromNotebook, saveToNotebook, useNotebook } from "@/lib/notebook";
+import QuoteSource from "./QuoteSource";
 
 const FILTERS = ["Tất cả", ...Array.from(new Set(quotes.map((quote) => quote.topic)))];
 
@@ -74,7 +75,12 @@ function QuoteCard({ quote }: { quote: (typeof quotes)[number] }) {
         <div className="flip-face flip-face-back absolute inset-0 flex flex-col justify-between rounded-2xl border border-gold/40 bg-charcoal p-6">
           <div className="overflow-y-auto pr-1">
             <p className="text-[10px] uppercase tracking-wideish text-gold/80">Nguồn</p>
-            <p className="mt-1 text-xs leading-relaxed text-cream/70">{quote.source}</p>
+            <QuoteSource
+              source={quote.source}
+              sourceUrl={quote.sourceUrl}
+              className="mt-1 block text-xs leading-relaxed text-cream/70"
+              linkClassName="focus-ring font-medium text-gold underline decoration-gold/40 underline-offset-2 hover:decoration-gold"
+            />
             <p className="mt-3 text-sm leading-relaxed text-cream/85">{quote.back}</p>
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-2">
