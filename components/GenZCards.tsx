@@ -116,7 +116,7 @@ function TiltCard({ card }: { card: (typeof cards)[number] }) {
 
 export default function GenZCards() {
   return (
-    <section id="goc-genz" className="bg-cream px-6 py-20 sm:px-10 lg:px-16">
+    <section id="goc-genz" className="bg-cream px-6 py-16 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-6xl">
         <motion.p
           className="font-sans text-sm uppercase tracking-wideish text-burgundy/80"
@@ -143,8 +143,8 @@ export default function GenZCards() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.15 }}
         >
-          Trên máy tính, di chuột qua thẻ để thẻ nghiêng nhẹ theo hướng tay — mỗi thẻ
-          là một cách chuyển giá trị cũ thành thói quen mới.
+          Mỗi thẻ là một cách chuyển giá trị cũ thành thói quen hôm nay — trên máy
+          tính, di chuột qua thẻ để thấy hiệu ứng nghiêng.
         </motion.p>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -456,7 +456,7 @@ export default function GlobeSection() {
   return (
     <section
       id="hanh-trinh"
-      className="relative bg-charcoal px-6 py-20 text-cream sm:px-10 lg:px-16"
+      className="relative bg-charcoal px-6 py-16 text-cream sm:px-10 lg:px-16"
     >
       <div className="mx-auto max-w-6xl">
         <motion.p

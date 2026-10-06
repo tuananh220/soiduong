@@ -6,6 +6,8 @@ import SiteHeader from "@/components/SiteHeader";
 import GenZCards from "@/components/GenZCards";
 import ChallengeSection from "@/components/ChallengeSection";
 import ScrollProgress from "@/components/ScrollProgress";
+import SectionNav from "@/components/SectionNav";
+import { SECTIONS } from "@/lib/sections";
 import ThoughtSection from "@/components/ThoughtSection";
 import KnowledgeCards from "@/components/KnowledgeCards";
 import CitationGame from "@/components/CitationGame";
@@ -26,6 +28,7 @@ export default function Home() {
     <main id="top">
       <ScrollProgress />
       <SiteHeader />
+      <SectionNav />
 
       <section className="relative overflow-hidden bg-cream px-6 pb-16 pt-28 sm:px-10 sm:pt-32 lg:px-16">
         <div
@@ -78,25 +81,23 @@ export default function Home() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
             }}
           >
-            <p className="font-medium text-burgundy">Ghi chú lịch sử:</p>
-            <p className="mt-1">
-              Các trích dẫn trong phiên bản này đã được đối chiếu với Hồ Chí Minh:
-              Toàn tập và tư liệu báo chí gốc; câu nào là bản rút gọn hoặc tinh
-              thần đều được ghi chú ngay tại chỗ.{" "}
+            <p>
+              <span className="font-medium text-burgundy">Ghi chú lịch sử: </span>
+              30 trích dẫn đã đối chiếu với Hồ Chí Minh: Toàn tập và tư liệu báo chí
+              gốc — mỗi câu đều có nút “Xem nguồn”.{" "}
               <a
                 href="#tu-tuong"
                 className="focus-ring font-medium text-burgundy underline decoration-burgundy/30 underline-offset-4 hover:decoration-burgundy"
               >
-                Xem bảng kiểm chứng trích dẫn
+                Bảng kiểm chứng →
               </a>
-              .
             </p>
           </motion.div>
 
           <Hero3D />
 
           <motion.div
-            className="mt-2 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            className="mt-2 flex flex-col items-center gap-5"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
@@ -106,20 +107,37 @@ export default function Home() {
               href="#hanh-trinh"
               className="focus-ring rounded-full bg-burgundy px-7 py-3 text-sm font-medium text-cream transition-transform hover:scale-[1.03]"
             >
-              Khám phá hành trình
+              Bắt đầu: hành trình 1890–1990
             </a>
-            <a
-              href="#tu-tuong"
-              className="focus-ring rounded-full border border-charcoal/20 px-7 py-3 text-sm font-medium text-charcoal transition-colors hover:border-charcoal/50"
-            >
-              Sáu chuyên đề tư tưởng
-            </a>
-            <a
-              href="#thach-thuc"
-              className="focus-ring rounded-full border border-charcoal/20 px-7 py-3 text-sm font-medium text-charcoal transition-colors hover:border-charcoal/50"
-            >
-              Trạm thách thức
-            </a>
+
+            {/* Mục lục ngắn: cho người đọc biết trang có gì trước khi phải cuộn. */}
+            <nav aria-label="Mục lục nhanh" className="w-full max-w-2xl">
+              <p className="text-[11px] font-semibold uppercase tracking-wideish text-charcoal/45">
+                Trang này có gì — chạm để tới thẳng
+              </p>
+              <ul className="mt-3 grid gap-2 text-left sm:grid-cols-2">
+                {SECTIONS.map((section, index) => (
+                  <li key={section.id}>
+                    <a
+                      href={`#${section.id}`}
+                      className="focus-ring flex gap-3 rounded-xl border border-charcoal/10 bg-cream/70 px-3 py-2 transition-colors hover:border-burgundy/40"
+                    >
+                      <span className="font-serif text-sm font-semibold text-burgundy/70">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span>
+                        <span className="block text-[13px] font-medium text-charcoal">
+                          {section.label}
+                        </span>
+                        <span className="mt-0.5 block text-[11px] leading-snug text-charcoal/55">
+                          {section.blurb}
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </motion.div>
         </motion.div>
       </section>
@@ -132,7 +150,7 @@ export default function Home() {
       <RoadmapSection />
       <NotebookSection />
 
-      <footer className="bg-cream px-6 py-10 text-center text-xs leading-relaxed text-charcoal/55 sm:px-10 lg:px-16">
+      <footer className="bg-cream px-6 pb-24 pt-10 text-center text-xs leading-relaxed text-charcoal/55 sm:px-10 lg:px-16 lg:pb-10">
         <p>
           Soi Đường — dự án học liệu tương tác, xây dựng cho mục đích giáo dục.
         </p>

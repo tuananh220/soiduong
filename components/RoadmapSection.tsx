@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import roadmap from "@/data/lo-trinh.json";
@@ -15,19 +14,32 @@ function readProgress(): number[] {
   try {
     const raw = window.localStorage.getItem(PROGRESS_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
-    return Array.isArray(parsed) ? parsed.filter((value) => typeof value === "number") : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((value) => typeof value === "number")
+      : [];
   } catch {
     return [];
   }
 }
 
+/**
+ * Lộ trình dạng gọn: một dải 7 ngày để chọn, bên dưới chỉ hiện nội dung của ngày
+ * đang chọn — thay cho 7 thẻ lớn chiếm gần 2 màn hình.
+ */
 export default function RoadmapSection() {
   const days = roadmap as RoadmapDay[];
   const [done, setDone] = useState<number[]>([]);
+  const [activeDay, setActiveDay] = useState(1);
   const { readTopics } = useNotebook();
 
   useEffect(() => {
-    setDone(readProgress());
+    const stored = readProgress();
+    setDone(stored);
+    // Mặc định mở ngày chưa hoàn thành đầu tiên để người mới không phải tự đoán.
+    const nextDay = days.find((day) => !stored.includes(day.day));
+    setActiveDay(nextDay ? nextDay.day : days[days.length - 1].day);
+    // days là dữ liệu tĩnh từ JSON nên không cần thêm dependency.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function toggle(day: number) {
@@ -45,10 +57,14 @@ export default function RoadmapSection() {
   }
 
   const completed = days.filter((day) => done.includes(day.day)).length;
+  const day = days.find((item) => item.day === activeDay) ?? days[0];
+  const topic = topics.find((item) => item.id === day.topicId);
+  const isDone = done.includes(day.day);
+  const topicRead = topic ? readTopics.includes(topic.id) : false;
 
   return (
-    <section id="lo-trinh" className="bg-charcoal px-6 py-20 text-cream sm:px-10 lg:px-16">
-      <div className="mx-auto max-w-5xl">
+    <section id="lo-trinh" className="bg-charcoal px-6 py-16 text-cream sm:px-10 lg:px-16">
+      <div className="mx-auto max-w-4xl">
         <motion.p
           className="font-sans text-sm uppercase tracking-wideish text-gold/80"
           initial={{ opacity: 0, y: 16 }}
@@ -65,17 +81,16 @@ export default function RoadmapSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Mỗi ngày một chuyên đề — bảy ngày nắm được cốt lõi
+          Bảy ngày, mỗi ngày 20–30 phút
         </motion.h2>
         <motion.p
-          className="mt-4 max-w-2xl text-cream/70"
+          className="mt-3 max-w-2xl text-sm leading-relaxed text-cream/70"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
         >
-          Mỗi ngày khoảng 20–30 phút: đọc một chuyên đề, làm vài thẻ kiến thức nền,
-          và một việc nhỏ áp dụng vào đời sống. Tiến độ được đánh dấu ngay trên máy bạn.
+          Chọn một ngày để xem việc cần làm. Tiến độ lưu ngay trên máy bạn.
         </motion.p>
 
         <div className="mt-6 max-w-md">
@@ -100,74 +115,97 @@ export default function RoadmapSection() {
           </div>
         </div>
 
-        <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {days.map((day, index) => {
-            const topic = topics.find((item) => item.id === day.topicId);
-            const isDone = done.includes(day.day);
-            const topicRead = topic ? readTopics.includes(topic.id) : false;
+        {/* Dải chọn ngày */}
+        <div
+          className="no-scrollbar -mx-1 mt-8 flex gap-2 overflow-x-auto px-1 pb-1"
+          role="tablist"
+          aria-label="Chọn ngày trong lộ trình"
+        >
+          {days.map((item) => {
+            const itemDone = done.includes(item.day);
+            const isActive = item.day === day.day;
             return (
-              <motion.li
-                key={day.day}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.45, delay: index * 0.06 }}
-                className={`flex flex-col rounded-2xl border p-5 transition-colors ${
-                  isDone
-                    ? "border-gold/50 bg-gold/[0.08]"
-                    : "border-cream/12 bg-charcoal-soft/50"
+              <button
+                key={item.day}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveDay(item.day)}
+                className={`focus-ring flex shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  isActive
+                    ? "border-gold bg-gold/20 text-cream"
+                    : "border-cream/15 text-cream/65 hover:border-cream/40"
                 }`}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <span className="font-serif text-2xl font-semibold text-gold">
-                    Ngày {day.day}
-                  </span>
-                  {topicRead ? (
-                    <span className="rounded-full border border-cream/20 px-2 py-0.5 text-[10px] text-cream/60">
-                      đã đọc chuyên đề
-                    </span>
-                  ) : null}
-                </div>
-                <h3 className="mt-3 font-serif text-lg font-semibold leading-snug">
-                  {day.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-cream/65">{day.focus}</p>
-
-                <ul className="mt-3 space-y-2 text-[13px] leading-relaxed text-cream/75">
-                  {day.tasks.map((task) => (
-                    <li key={task} className="flex gap-2">
-                      <span aria-hidden="true" className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-gold/70" />
-                      <span>{task}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="mt-auto flex flex-wrap items-center gap-3 pt-4">
-                  <button
-                    type="button"
-                    onClick={() => toggle(day.day)}
-                    aria-pressed={isDone}
-                    className={`focus-ring rounded-full border px-3 py-1.5 text-[11px] font-medium transition-colors ${
-                      isDone
-                        ? "border-gold bg-gold/20 text-cream"
-                        : "border-cream/25 text-cream/70 hover:border-cream/50"
-                    }`}
-                  >
-                    {isDone ? "✓ Đã hoàn thành" : "Đánh dấu hoàn thành"}
-                  </button>
-                  {topic ? (
-                    <Link
-                      href="#tu-tuong"
-                      className="focus-ring text-[11px] text-gold/80 underline decoration-gold/30 underline-offset-4 hover:text-gold"
-                    >
-                      Mở chuyên đề {topic.order}
-                    </Link>
-                  ) : null}
-                </div>
-              </motion.li>
+                <span>{itemDone ? "✓" : `Ngày ${item.day}`}</span>
+                {itemDone && isActive ? (
+                  <span className="text-[11px] text-cream/70">đã xong</span>
+                ) : null}
+              </button>
             );
           })}
-        </ol>
+        </div>
+
+        {/* Chi tiết ngày đang chọn */}
+        <motion.div
+          key={day.day}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className={`mt-4 rounded-2xl border p-6 ${
+            isDone ? "border-gold/50 bg-gold/[0.08]" : "border-cream/12 bg-charcoal-soft/50"
+          }`}
+        >
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-[11px] font-semibold uppercase tracking-wideish text-gold/80">
+              Ngày {day.day}/7
+            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              {topicRead ? (
+                <span className="rounded-full border border-cream/20 px-2.5 py-0.5 text-[10px] text-cream/60">
+                  đã đọc chuyên đề {topic?.order}
+                </span>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => toggle(day.day)}
+                aria-pressed={isDone}
+                className={`focus-ring rounded-full border px-3 py-1.5 text-[11px] font-medium transition-colors ${
+                  isDone
+                    ? "border-gold bg-gold/20 text-cream"
+                    : "border-cream/25 text-cream/70 hover:border-cream/50"
+                }`}
+              >
+                {isDone ? "✓ Đã hoàn thành" : "Đánh dấu hoàn thành"}
+              </button>
+            </div>
+          </div>
+
+          <h3 className="mt-3 font-serif text-2xl font-semibold leading-snug">
+            {day.title}
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-cream/70">{day.focus}</p>
+
+          <ol className="mt-4 space-y-2 text-sm leading-relaxed text-cream/80">
+            {day.tasks.map((task, index) => (
+              <li key={task} className="flex gap-3">
+                <span className="mt-0.5 font-serif text-sm font-semibold text-gold/80">
+                  {index + 1}.
+                </span>
+                <span>{task}</span>
+              </li>
+            ))}
+          </ol>
+
+          {topic ? (
+            <a
+              href="#tu-tuong"
+              className="focus-ring mt-4 inline-block rounded-full border border-gold/50 px-4 py-2 text-xs font-medium text-gold transition-colors hover:bg-gold/10"
+            >
+              Mở chuyên đề {topic.order}: {topic.short} →
+            </a>
+          ) : null}
+        </motion.div>
       </div>
     </section>
   );

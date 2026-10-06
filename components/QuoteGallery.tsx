@@ -141,12 +141,18 @@ function QuoteCard({ quote }: { quote: (typeof quotes)[number] }) {
   );
 }
 
+const PREVIEW_COUNT = 4;
+
 export default function QuoteGallery() {
   const [filter, setFilter] = useState("Tất cả");
+  const [showAll, setShowAll] = useState(false);
   const visible = useMemo(
     () => quotes.filter((quote) => filter === "Tất cả" || quote.topic === filter),
     [filter],
   );
+  // Xem "Tất cả" thì 4 câu trước, chọn chuyên đề cụ thể thì hiện hết nhóm đó.
+  const collapsed = filter === "Tất cả" && !showAll;
+  const displayed = collapsed ? visible.slice(0, PREVIEW_COUNT) : visible;
 
   return (
     <div className="mt-8">
@@ -173,10 +179,23 @@ export default function QuoteGallery() {
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {visible.map((quote) => (
+        {displayed.map((quote) => (
           <QuoteCard key={quote.id} quote={quote} />
         ))}
       </div>
+
+      {filter === "Tất cả" && visible.length > PREVIEW_COUNT ? (
+        <button
+          type="button"
+          onClick={() => setShowAll((value) => !value)}
+          aria-expanded={showAll}
+          className="focus-ring mx-auto mt-8 block w-full max-w-md rounded-full border border-gold/40 px-5 py-3 text-sm font-medium text-gold transition-colors hover:bg-gold/10"
+        >
+          {showAll
+            ? `Thu gọn (chỉ hiện ${PREVIEW_COUNT} thẻ đầu)`
+            : `Xem thêm ${visible.length - PREVIEW_COUNT} thẻ trích dẫn`}
+        </button>
+      ) : null}
 
       <p className="mt-6 text-center text-[11px] text-cream/45">
         Mỗi câu đều ghi rõ tác phẩm, bối cảnh và mức độ nguyên văn. Xem mục “Kiểm chứng

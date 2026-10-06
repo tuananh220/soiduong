@@ -116,15 +116,21 @@ function Flashcard({ card, index }: { card: KnowledgeCard; index: number }) {
   );
 }
 
+const PREVIEW_COUNT = 6;
+
 export default function KnowledgeCards() {
   const [filter, setFilter] = useState<FilterId>("all");
+  const [showAll, setShowAll] = useState(false);
   const visible = useMemo(
     () => (cards as KnowledgeCard[]).filter((card) => matchFilter(card, filter)),
     [filter],
   );
+  // Khi đang lọc theo nhóm thì hiện hết nhóm đó; khi xem "Tất cả" thì chỉ 6 thẻ đầu.
+  const collapsed = filter === "all" && !showAll;
+  const displayed = collapsed ? visible.slice(0, PREVIEW_COUNT) : visible;
 
   return (
-    <section id="kien-thuc-nen" className="bg-cream px-6 py-20 sm:px-10 lg:px-16">
+    <section id="kien-thuc-nen" className="bg-cream px-6 py-16 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-6xl">
         <p className="font-sans text-sm uppercase tracking-wideish text-burgundy/80">
           Ôn tập nền tảng
@@ -133,9 +139,8 @@ export default function KnowledgeCards() {
           Thẻ kiến thức nền — phần hay được hỏi khi kiểm tra
         </h2>
         <p className="mt-4 max-w-2xl text-sm leading-relaxed text-charcoal/70">
-          Định nghĩa tư tưởng Hồ Chí Minh, các cơ sở hình thành và năm thời kỳ phát
-          triển. Lật thẻ để xem câu trả lời chuẩn theo giáo trình, kèm ghi rõ tài liệu
-          để bạn đối chiếu lại khi viết bài.
+          Lật thẻ để xem câu trả lời chuẩn theo giáo trình — mỗi thẻ đều ghi rõ tài
+          liệu để bạn đối chiếu khi viết bài.
         </p>
 
         <div
@@ -161,10 +166,23 @@ export default function KnowledgeCards() {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((card, index) => (
+          {displayed.map((card, index) => (
             <Flashcard key={card.id} card={card} index={index} />
           ))}
         </div>
+
+        {filter === "all" && visible.length > PREVIEW_COUNT ? (
+          <button
+            type="button"
+            onClick={() => setShowAll((value) => !value)}
+            aria-expanded={showAll}
+            className="focus-ring mt-6 w-full rounded-xl border border-charcoal/15 bg-cream px-4 py-3 text-sm font-medium text-burgundy transition-colors hover:border-burgundy/40"
+          >
+            {showAll
+              ? `Thu gọn (chỉ hiện ${PREVIEW_COUNT} thẻ đầu)`
+              : `Xem thêm ${visible.length - PREVIEW_COUNT} thẻ nữa`}
+          </button>
+        ) : null}
 
         <p className="mt-6 text-[11px] text-charcoal/50">
           Nội dung được trình bày lại theo Giáo trình Tư tưởng Hồ Chí Minh (NXB Chính

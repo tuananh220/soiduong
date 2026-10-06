@@ -79,7 +79,7 @@ export default function NotebookSection() {
   const isEmpty = items.length === 0 && readTopics.length === 0;
 
   return (
-    <section id="so-tay" className="bg-charcoal px-6 py-20 text-cream sm:px-10 lg:px-16">
+    <section id="so-tay" className="bg-charcoal px-6 py-16 text-cream sm:px-10 lg:px-16">
       <div className="mx-auto max-w-5xl">
         <motion.p
           className="font-sans text-sm uppercase tracking-wideish text-gold/80"

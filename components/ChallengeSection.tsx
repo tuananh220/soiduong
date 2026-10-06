@@ -16,7 +16,7 @@ const fadeUp = {
 
 export default function ChallengeSection() {
   return (
-    <section id="thach-thuc" className="bg-charcoal px-6 py-20 text-cream sm:px-10 lg:px-16">
+    <section id="thach-thuc" className="bg-charcoal px-6 py-16 text-cream sm:px-10 lg:px-16">
       <div className="mx-auto max-w-5xl">
         <motion.p
           className="text-center font-sans text-sm uppercase tracking-wideish text-gold/80"
@@ -49,7 +49,7 @@ export default function ChallengeSection() {
           <QuizGame />
         </motion.div>
 
-        <div className="mt-20">
+        <div className="mt-14">
           <motion.p
             className="text-center font-sans text-sm uppercase tracking-wideish text-gold/80"
             initial="hidden"
@@ -92,7 +92,7 @@ export default function ChallengeSection() {
           </motion.div>
         </div>
 
-        <div className="mt-20">
+        <div className="mt-14">
           <motion.p
             className="text-center font-sans text-sm uppercase tracking-wideish text-gold/80"
             initial="hidden"

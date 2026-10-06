@@ -375,13 +375,19 @@ function LabSkeleton() {
   );
 }
 
+const AUDIT_PREVIEW_COUNT = 4;
+
 function AuditList() {
   const [filter, setFilter] = useState<AuditFilter>("all");
+  const [expanded, setExpanded] = useState(false);
   const entries = useMemo(() => {
     if (filter === "all") return audit as AuditEntry[];
     if (filter === "warn") return (audit as AuditEntry[]).filter(isWarnEntry);
     return (audit as AuditEntry[]).filter((entry) => !isWarnEntry(entry));
   }, [filter]);
+  // Mặc định chỉ hiện vài trường hợp tiêu biểu để phần này không chiếm 6 màn hình.
+  const collapsed = filter === "all" && !expanded;
+  const visibleEntries = collapsed ? entries.slice(0, AUDIT_PREVIEW_COUNT) : entries;
 
   return (
     <div>
@@ -404,7 +410,7 @@ function AuditList() {
       </div>
 
       <ul className="mt-5 grid gap-4 md:grid-cols-2">
-        {entries.map((entry) => (
+        {visibleEntries.map((entry) => (
           <li
             key={entry.id}
             className="rounded-2xl border border-charcoal/10 bg-cream p-5"
@@ -438,6 +444,19 @@ function AuditList() {
           </li>
         ))}
       </ul>
+
+      {filter === "all" ? (
+        <button
+          type="button"
+          onClick={() => setExpanded((value) => !value)}
+          aria-expanded={expanded}
+          className="focus-ring mt-5 w-full rounded-xl border border-charcoal/15 bg-cream px-4 py-3 text-sm font-medium text-burgundy transition-colors hover:border-burgundy/40"
+        >
+          {expanded
+            ? "Thu gọn (chỉ hiện 4 trường hợp tiêu biểu)"
+            : `Xem tất cả ${entries.length} trường hợp — gồm cả những câu bị gán sai`}
+        </button>
+      ) : null}
     </div>
   );
 }
@@ -566,7 +585,7 @@ export default function ThoughtSection() {
   }, [autoplay, paused, readingDetail, topicList.length]);
 
   return (
-    <section id="tu-tuong" className="bg-cream-dim px-6 py-20 sm:px-10 lg:px-16">
+    <section id="tu-tuong" className="bg-cream-dim px-6 py-16 sm:px-10 lg:px-16">
       <div className="mx-auto max-w-6xl">
         <motion.p
           className="font-sans text-sm uppercase tracking-wideish text-burgundy/80"
@@ -587,15 +606,13 @@ export default function ThoughtSection() {
           Sáu chuyên đề cốt lõi, mỗi câu nói đều có nguồn
         </motion.h2>
         <motion.p
-          className="mt-4 max-w-2xl text-charcoal/70"
+          className="mt-4 max-w-2xl text-sm leading-relaxed text-charcoal/70"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Xoay vòng thẻ 3D để chọn chuyên đề, đọc luận điểm và trích dẫn kèm xuất xứ.
-          Cuối mục là bảng kiểm chứng — nơi những câu hay bị gán sai cho Bác được
-          chỉ ra cách dùng đúng.
+          Xoay vòng thẻ 3D để chọn chuyên đề; mỗi trích dẫn đều có nút xem nguồn.
         </motion.p>
 
         <p className="sr-only" aria-live="polite">
@@ -770,20 +787,26 @@ export default function ThoughtSection() {
           </div>
         </div>
 
-        <div className="mt-20">
-          <motion.h3
-            className="max-w-2xl font-serif text-2xl font-semibold text-charcoal sm:text-3xl"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            Nguồn, chính sách nội dung và giấy phép
-          </motion.h3>
-          <div className="mt-6">
+        <details className="group mt-12 rounded-2xl border border-charcoal/12 bg-cream/70 p-5">
+          <summary className="focus-ring cursor-pointer list-none">
+            <span className="font-serif text-lg font-semibold text-charcoal">
+              Nguồn, chính sách nội dung và giấy phép
+            </span>
+            <span className="mt-1 block text-[12px] text-charcoal/55">
+              Cách nhóm biên soạn kiểm chứng nội dung, tài liệu đối chiếu và giấy phép
+              của ảnh, thư viện 3D. Mở để xem chi tiết.
+            </span>
+            <span className="mt-2 inline-block text-[11px] font-medium text-burgundy group-open:hidden">
+              ▸ Mở chi tiết
+            </span>
+            <span className="mt-2 hidden text-[11px] font-medium text-burgundy group-open:inline-block">
+              ▾ Thu gọn
+            </span>
+          </summary>
+          <div className="mt-5">
             <SourcesPanel />
           </div>
-        </div>
+        </details>
       </div>
     </section>
   );

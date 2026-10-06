@@ -21,22 +21,25 @@ soiduong/
 │   ├── page.tsx            # Ghép nối toàn bộ single-page
 │   └── globals.css         # Token màu, font, reduced-motion, flip-card, style khi in
 ├── components/
-│   ├── SiteHeader.tsx      # Thanh điều hướng cố định (5 mục)
-│   ├── ScrollProgress.tsx  # Thanh tiến độ đọc + chấm điều hướng + nút về đầu trang
+│   ├── SiteHeader.tsx      # Thanh điều hướng cố định (7 mục, đọc từ lib/sections.ts)
+│   ├── SectionNav.tsx      # Mục lục thông minh: rail bên phải (máy tính) / thanh dưới (điện thoại)
+│   ├── ScrollProgress.tsx  # Thanh tiến độ đọc + nút "giảm hiệu ứng" / về đầu trang
 │   ├── Hero3D.tsx          # SECTION 1 — biểu tượng búa và liềm 3D (R3F)
 │   ├── GlobeSection.tsx    # SECTION 2 — quả địa cầu 3D + mốc lịch sử
 │   ├── ThoughtSection.tsx  # SECTION 3 — sáu chuyên đề + kiểm chứng trích dẫn
 │   ├── ThoughtLab3D.tsx    #   3D: vòng xoay thẻ chuyên đề (CanvasTexture + Bloom)
 │   ├── QuoteSource.tsx     #   Nguồn trích dẫn + link tra cứu
-│   ├── KnowledgeCards.tsx  # SECTION 4 — 12 thẻ kiến thức nền (flashcard ôn tập)
+│   ├── KnowledgeCards.tsx  # SECTION 4 — 12 thẻ kiến thức nền (hiện 6 thẻ, có nút xem thêm)
 │   ├── GenZCards.tsx       # SECTION 5 — thẻ tilt 3D bài học Gen Z
 │   ├── ChallengeSection.tsx# Bọc QuizGame + CitationGame + QuoteGallery
 │   ├── QuizGame.tsx        # SECTION 6a — 7 câu hỏi tình huống
 │   ├── CitationGame.tsx    # SECTION 6b — trò chơi "Câu này của ai?"
-│   ├── QuoteGallery.tsx    # SECTION 6c — thẻ trích dẫn lật 3D, có link nguồn
-│   ├── RoadmapSection.tsx  # SECTION 7 — lộ trình 7 ngày, theo dõi tiến độ
+│   ├── QuoteGallery.tsx    # SECTION 6c — thẻ trích dẫn lật 3D (hiện 4 thẻ, có nút xem thêm)
+│   ├── RoadmapSection.tsx  # SECTION 7 — lộ trình 7 ngày dạng dải chọn ngày, 1 ngày mở mỗi lúc
 │   └── NotebookSection.tsx # SECTION 8 — sổ tay ôn tập, xuất Markdown / in PDF
 ├── lib/
+│   ├── sections.ts         # Nguồn duy nhất cho mục lục: header, rail điều hướng, mục lục ở hero
+│   ├── prefs.ts            # Tuỳ chọn người dùng: giảm hiệu ứng, phát hiện thiết bị có chuột
 │   ├── notebook.ts         # Store localStorage: trích dẫn, việc nhỏ, ghi chú, đã đọc
 │   └── types.ts            # Type suy ra trực tiếp từ JSON
 ├── data/
@@ -138,6 +141,24 @@ soiduong/
   nền trắng để sổ tay in ra đọc được.
 - **Cập nhật nội dung**: chỉ cần sửa file JSON trong `/data`, không đụng vào
   component (kiểu dữ liệu suy ra trực tiếp từ JSON trong `lib/types.ts`).
+
+## Trang gọn để dễ đọc
+
+Trang cố tình giữ **mọi nội dung đã kiểm duyệt vẫn tới được**, nhưng không bắt người
+đọc cuộn hết một lần:
+
+- **Mục lục ở hero** (`lib/sections.ts`): 7 mục, chạm là tới thẳng.
+- **`SectionNav`**: rail bên phải trên máy tính (nhãn mục đang xem) và thanh dưới cùng
+  trên điện thoại (`‹`, `Mục n/7`, `›` + mở mục lục + "giảm hiệu ứng" + về đầu trang).
+- **Hiện dần (progressive disclosure)**: 6 chuyên đề tư tưởng là accordion đóng sẵn;
+  phần kiểm chứng trích dẫn hiện 4/12 trường hợp; thẻ kiến thức nền hiện 6/12;
+  thư viện trích dẫn hiện 4/8; lộ trình chỉ mở một ngày mỗi lúc.
+- **Giảm hiệu ứng**: nút bật/tắt 3D, tilt, marquee, parallax (`lib/prefs.ts`,
+  `soiduong.reduce-effects.v1`).
+
+Ước lượng sau khi nén: khoảng **8.400 px** (≈ 10,6 màn hình máy tính / ≈ 29 màn hình
+điện thoại), giảm khoảng **37%** so với ~13.350 px trước đó. Mọi nút "xem thêm" đều
+dùng `aria-expanded`, lộ trình dùng `role="tablist"` + `aria-selected`.
 
 ## Kiểm tra trước khi triển khai
 

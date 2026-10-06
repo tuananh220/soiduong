@@ -9,16 +9,11 @@ import {
   useReduceEffects,
 } from "@/lib/prefs";
 
-const SECTIONS = [
-  { id: "hanh-trinh", label: "Hành trình" },
-  { id: "tu-tuong", label: "Tư tưởng" },
-  { id: "kien-thuc-nen", label: "Ôn tập nền tảng" },
-  { id: "goc-genz", label: "Góc Gen Z" },
-  { id: "thach-thuc", label: "Thách thức" },
-  { id: "lo-trinh", label: "Lộ trình 7 ngày" },
-  { id: "so-tay", label: "Sổ tay" },
-];
-
+/**
+ * Phần "khung" của trang: thanh tiến độ đọc ở trên cùng, và ở màn hình lớn là
+ * hai nút tiện dụng (giảm hiệu ứng, về đầu trang). Trên màn hình nhỏ, hai hành
+ * động này nằm trong mục lục của SectionNav nên không cần nút nổi trùng lặp.
+ */
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -51,28 +46,7 @@ export default function ScrollProgress() {
         className="fixed inset-x-0 top-0 z-40 h-[3px] origin-left bg-gradient-to-r from-burgundy via-gold to-gold-soft"
       />
 
-      <nav
-        aria-label="Điều hướng nhanh theo mục"
-        className="fixed right-3 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-end gap-2 lg:flex"
-      >
-        {SECTIONS.map((section) => (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className="focus-ring group flex items-center gap-2 text-[11px] text-charcoal/45 transition-colors hover:text-burgundy"
-          >
-            <span className="rounded-full bg-cream/90 px-2 py-0.5 opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100">
-              {section.label}
-            </span>
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 rounded-full border border-charcoal/30 bg-cream transition-colors group-hover:border-burgundy group-hover:bg-burgundy"
-            />
-          </a>
-        ))}
-      </nav>
-
-      <div className="fixed bottom-5 right-5 z-30 flex flex-col items-end gap-2">
+      <div className="fixed bottom-5 right-5 z-30 hidden flex-col items-end gap-2 lg:flex">
         <button
           type="button"
           onClick={() => setReduceEffects(!reduceEffects)}
