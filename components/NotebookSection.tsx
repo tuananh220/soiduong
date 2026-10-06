@@ -106,9 +106,8 @@ export default function NotebookSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Mọi thứ bạn lưu ở phần Tư tưởng và phần Trích dẫn được giữ trong trình duyệt
-          của bạn — không có tài khoản, không có máy chủ. Xuất ra file Markdown để
-          mang vào bài luận, hoặc in thành bản giấy để ôn thi.
+          Mọi thứ bạn lưu được giữ ngay trong trình duyệt — không tài khoản, không máy
+          chủ. Xuất Markdown để mang vào bài luận, hoặc in ra giấy để ôn thi.
         </motion.p>
 
         <div className="mt-6 flex flex-wrap gap-3 text-[11px]">

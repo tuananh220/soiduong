@@ -612,7 +612,7 @@ export default function ThoughtSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Xoay vòng thẻ 3D để chọn chuyên đề; mỗi trích dẫn đều có nút xem nguồn.
+          Xoay vòng thẻ để chọn chuyên đề — mỗi trích dẫn đều có nút xem nguồn.
         </motion.p>
 
         <p className="sr-only" aria-live="polite">
@@ -736,8 +736,7 @@ export default function ThoughtSection() {
                 {autoplay ? "⏸ Tạm dừng tự động xoay" : "▶ Bật tự động xoay"}
               </button>
               <span className="hidden sm:inline">
-                Mẹo: dùng ← → khi không gian 3D đang được chọn, hoặc kéo ngang bằng
-                chuột — kéo dọc vẫn cuộn trang bình thường.
+                Mẹo: ← → hoặc kéo ngang để đổi chuyên đề.
               </span>
             </div>
           </div>
@@ -778,9 +777,7 @@ export default function ThoughtSection() {
             Những câu tưởng là của Bác — và sự thật tư liệu
           </motion.h3>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-charcoal/70">
-            Danh sách dưới đây là kết quả đối chiếu với Hồ Chí Minh: Toàn tập và các
-            tư liệu báo chí gốc. Mục tiêu không phải là “bắt lỗi”, mà để bạn dùng
-            trích dẫn một cách có trách nhiệm trong bài luận và trong đời sống.
+            Kết quả đối chiếu với Hồ Chí Minh: Toàn tập và tư liệu báo chí gốc.
           </p>
           <div className="mt-6">
             <AuditList />
@@ -793,8 +790,7 @@ export default function ThoughtSection() {
               Nguồn, chính sách nội dung và giấy phép
             </span>
             <span className="mt-1 block text-[12px] text-charcoal/55">
-              Cách nhóm biên soạn kiểm chứng nội dung, tài liệu đối chiếu và giấy phép
-              của ảnh, thư viện 3D. Mở để xem chi tiết.
+              Tài liệu đối chiếu và giấy phép ảnh, thư viện 3D.
             </span>
             <span className="mt-2 inline-block text-[11px] font-medium text-burgundy group-open:hidden">
               ▸ Mở chi tiết

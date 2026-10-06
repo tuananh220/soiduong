@@ -50,7 +50,7 @@ soiduong/
 │   ├── trot-choi.json      # 14 câu cho trò chơi "Câu này của ai?" + 6 nhãn tác giả
 │   ├── kien-thuc-nen.json  # 12 thẻ flashcard: định nghĩa, cơ sở, 5 thời kỳ, giá trị
 │   ├── lo-trinh.json       # Lộ trình 7 ngày (mỗi ngày 1 chuyên đề + việc nhỏ)
-│   ├── audio.json          # 2 clip thử nghiệm: file, thời lượng, scriptVersion để biết khi nào thu lại
+│   ├── audio.json          # 2 clip giọng tổng hợp: file, thời lượng, scriptVersion để biết khi nào thu lại
 │   ├── audio-goc.json      # 11 tư liệu gốc có tiếng nói của Người (chỉ liên kết, không sao chép tệp)
 │   ├── nguon.json          # Chính sách nội dung, tư liệu đối chiếu, giấy phép tài sản
 │   ├── timeline.json       # 13 mốc lịch sử từ 1890 đến 1990
@@ -149,9 +149,9 @@ soiduong/
 - **Cập nhật nội dung**: chỉ cần sửa file JSON trong `/data`, không đụng vào
   component (kiểu dữ liệu suy ra trực tiếp từ JSON trong `lib/types.ts`).
 
-## Nội dung kèm âm thanh (bản thử nghiệm)
+## Nội dung kèm âm thanh
 
-- `data/audio.json` + `components/ListenButton.tsx`: nút nghe **không tự phát**,
+- `data/audio.json` + `components/ListenButton.tsx`: nút nghe **không tự phát** (giọng tổng hợp, ghi rõ trên giao diện là không phải giọng Bác Hồ),
   chỉ một clip phát tại một thời điểm, có `aria-pressed`, thanh tiến độ và thời lượng.
 - Kịch bản audio lấy **nguyên văn** từ dữ liệu đã kiểm duyệt, mỗi clip ghi
   `scriptVersion` (ví dụ `tu-tuong.json#doc-lap-cnxh/quotes[1]`) để biết khi nào nội

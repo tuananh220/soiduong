@@ -78,8 +78,8 @@ export default function ChallengeSection() {
             variants={fadeUp}
             custom={0.15}
           >
-            Nhiều câu nói hay bị gán nhầm cho Bác Hồ. Mỗi vòng gồm 8 câu — chọn tác
-            giả đúng rồi đọc phần giải thích kèm tư liệu đối chiếu.
+            Nhiều câu nói hay bị gán nhầm cho Bác Hồ — chọn tác giả đúng rồi đọc
+            phần giải thích.
           </motion.p>
           <motion.div
             className="mt-8"
@@ -121,8 +121,7 @@ export default function ChallengeSection() {
             variants={fadeUp}
             custom={0.15}
           >
-            Tám trích dẫn đã đối chiếu nguồn, lọc theo chuyên đề. Câu nào bạn lưu sẽ
-            nằm trong Sổ tay ôn tập ở cuối trang.
+            Tám trích dẫn đã đối chiếu nguồn, lọc theo chuyên đề.
           </motion.p>
           <QuoteGallery />
         </div>

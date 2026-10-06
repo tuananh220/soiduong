@@ -484,8 +484,7 @@ export default function GlobeSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Chọn một giai đoạn hoặc mốc thời gian để phân biệt sự kiện lịch sử với
-          cách diễn giải dành cho đời sống hôm nay.
+          Chọn một giai đoạn hoặc mốc để tách sự kiện lịch sử khỏi phần diễn giải.
         </motion.p>
 
         <div className="mt-6 max-w-xl" aria-label="Tiến trình hành trình">

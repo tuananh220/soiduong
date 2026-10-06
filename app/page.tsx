@@ -77,26 +77,6 @@ export default function Home() {
             sống của mình.
           </motion.p>
 
-          <motion.div
-            className="mx-auto mt-6 max-w-3xl rounded-2xl border border-burgundy/20 bg-burgundy/5 px-4 py-3 text-left text-sm leading-relaxed text-charcoal/75 sm:px-6"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
-            }}
-          >
-            <p>
-              <span className="font-medium text-burgundy">Ghi chú lịch sử: </span>
-              30 trích dẫn đã đối chiếu với Hồ Chí Minh: Toàn tập và tư liệu báo chí
-              gốc — mỗi câu đều có nút “Xem nguồn”.{" "}
-              <a
-                href="#tu-tuong"
-                className="focus-ring font-medium text-burgundy underline decoration-burgundy/30 underline-offset-4 hover:decoration-burgundy"
-              >
-                Bảng kiểm chứng →
-              </a>
-            </p>
-          </motion.div>
-
           <Hero3D />
 
           <motion.div
@@ -142,10 +122,13 @@ export default function Home() {
               </ul>
             </nav>
 
-            {/* Nghe thay vì đọc: bản thử nghiệm, không tự phát, bản chữ có sẵn trên trang. */}
+            {/* Nghe thay vì đọc: không tự phát; bản chữ luôn nằm ngay trên trang. */}
             <div className="w-full max-w-2xl">
               <p className="text-[11px] font-semibold uppercase tracking-wideish text-charcoal/45">
-                Nghe thay vì đọc — bản thử nghiệm
+                Nghe thay vì đọc{" "}
+                <span className="font-normal normal-case tracking-normal text-charcoal/40">
+                  · giọng tổng hợp, không phải giọng Bác Hồ
+                </span>
               </p>
               <div className="mt-3 grid gap-2 sm:grid-cols-2">
                 <ListenButton
@@ -159,10 +142,6 @@ export default function Home() {
                   seconds={audioData["mau-nam-bo-1946"].seconds}
                 />
               </div>
-              <p className="mt-2 text-[11px] leading-relaxed text-charcoal/55">
-                Giọng đọc nhân tạo từ kịch bản đã kiểm duyệt. Bản chữ đầy đủ vẫn nằm
-                ngay trên trang — không có nội dung nào chỉ tồn tại dưới dạng âm thanh.
-              </p>
             </div>
 
             {/* Tiếng nói gốc: chỉ liên kết, không sao chép tệp về trang. */}
@@ -181,7 +160,13 @@ export default function Home() {
 
       <footer className="bg-cream px-6 pb-24 pt-10 text-center text-xs leading-relaxed text-charcoal/65 sm:px-10 lg:px-16 lg:pb-10">
         <p>
-          Soi Đường — dự án học liệu tương tác, xây dựng cho mục đích giáo dục.
+          Soi Đường — dự án học liệu tương tác, xây dựng cho mục đích giáo dục.{" "}
+          <a
+            href="#tu-tuong"
+            className="focus-ring font-medium text-burgundy underline decoration-burgundy/30 underline-offset-4 hover:decoration-burgundy"
+          >
+            Bảng kiểm chứng trích dẫn →
+          </a>
         </p>
         <p className="mx-auto mt-2 max-w-2xl">
           Nội dung trích dẫn được đối chiếu với Hồ Chí Minh: Toàn tập (NXB Chính trị

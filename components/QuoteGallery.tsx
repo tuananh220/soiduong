@@ -198,8 +198,7 @@ export default function QuoteGallery() {
       ) : null}
 
       <p className="mt-6 text-center text-[11px] text-cream/45">
-        Mỗi câu đều ghi rõ tác phẩm, bối cảnh và mức độ nguyên văn. Xem mục “Kiểm chứng
-        trích dẫn” ở phần Tư tưởng để biết những câu hay bị gán sai.
+        Mỗi câu đều ghi rõ tác phẩm, bối cảnh và mức độ nguyên văn.
       </p>
     </div>
   );

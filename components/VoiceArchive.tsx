@@ -88,12 +88,8 @@ export default function VoiceArchive() {
 
       <div className="mt-4">
         <p className="text-[11px] leading-relaxed text-charcoal/70">
-          Trang chỉ <strong className="font-semibold">liên kết</strong> tới kho lưu trữ
-          của cơ quan chủ quản, không sao chép tệp về đây: vừa tôn trọng bản quyền của
-          đơn vị lưu trữ, vừa tránh những bản “giọng Bác” do AI nhái hoặc gán sai sự
-          kiện đang lan truyền. Hai clip ở trên là{" "}
-          <strong className="font-semibold">giọng tổng hợp đọc lại</strong> kịch bản đã
-          kiểm duyệt — không phải giọng Người.
+          Chỉ liên kết tới kho lưu trữ chính thức — trang không sao chép tệp và không
+          dùng giọng AI nhái giọng Bác.
         </p>
 
         {renderGroup("Bản ghi âm tiếng nói", audioItems, "Nghe")}
