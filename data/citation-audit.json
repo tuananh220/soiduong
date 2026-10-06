@@ -1,0 +1,110 @@
+[
+  {
+    "id": "audit-dan-cung-chiu",
+    "quote": "Dễ trăm lần không dân cũng chịu, khó vạn lần dân liệu cũng xong.",
+    "verdict": "gan-sai",
+    "verdictLabel": "Thường bị gán sai",
+    "evidence": "Hai câu này nằm trong bài thơ “Dân no thì lính cũng no” của nhà thơ Thanh Tịnh (1948, thời vận động nhân dân đóng thuế nông nghiệp). Chủ tịch Hồ Chí Minh nhiều lần nhắc lại tinh thần ấy, ví dụ khi nói chuyện với lớp bồi dưỡng cán bộ lãnh đạo cấp huyện ngày 18/1/1967 — nguyên văn khi đó là “Dễ mười lần không dân cũng chịu. Khó trăm lần dân liệu cũng xong.”",
+    "referenceUrl": "https://vi.wikiquote.org/wiki/Th%E1%BA%A3o_lu%E1%BA%ADn:H%E1%BB%93_Ch%C3%AD_Minh",
+    "correctUsage": "Nếu dùng, nên ghi rõ: “câu thơ của Thanh Tịnh, được Chủ tịch Hồ Chí Minh nhắc lại như một lời dạy về vai trò của quần chúng”."
+  },
+  {
+    "id": "audit-hoc-suot-doi",
+    "quote": "Học hỏi là một việc phải tiếp tục suốt đời.",
+    "verdict": "sai-nguon",
+    "verdictLabel": "Đúng nguyên văn, sai nguồn",
+    "evidence": "Câu này thuộc bài nói tại lớp nghiên cứu chính trị khóa I, Trường Đại học Nhân dân Việt Nam, ngày 21/7/1956 — không phải “thư gửi các học viên Trường Nguyễn Ái Quốc năm 1949” như nhiều tài liệu (kể cả các bản cũ trên không gian mạng) ghi lại.",
+    "referenceUrl": "https://lyluanchinhtri.vn/ho-chi-minh-tam-guong-mau-muc-ve-tu-hoc-va-hoc-suot-doi-573.html",
+    "correctUsage": "Ghi nguồn: bài nói ngày 21/7/1956. Phần tiếp theo thường bị cắt mất: “Suốt đời phải gắn liền lý luận với công tác thực tế”."
+  },
+  {
+    "id": "audit-tam-guong-song",
+    "quote": "Một tấm gương sống còn có giá trị hơn một trăm bài diễn văn tuyên truyền.",
+    "verdict": "sai-nguon",
+    "verdictLabel": "Đúng nguyên văn, sai nguồn",
+    "evidence": "Câu này có từ ngày 20/5/1924, trong “Thư gửi đồng chí Pêtơrốp” (Tổng Thư ký Ban Phương Đông của Quốc tế Cộng sản). Nhiều nơi vẫn trích nhầm thành “bài nói chuyện tại lớp chỉnh Đảng năm 1961”.",
+    "referenceUrl": "https://daibieunhandan.vn/mot-tam-guong-song-con-co-gia-tri-hon-mot-tram-bai-dien-van-tuyen-truyen-post266003.html",
+    "correctUsage": "Ghi nguồn 1924 — điều này còn cho thấy tư tưởng về nêu gương đã có từ rất sớm, khi Người mới hơn 30 tuổi."
+  },
+  {
+    "id": "audit-doan-ket-boi-2",
+    "quote": "Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công.",
+    "verdict": "dung-nguyen-van",
+    "verdictLabel": "Nguyên văn — cần thêm bối cảnh",
+    "evidence": "Người nói câu này tại Đại hội đại biểu Mặt trận Tổ quốc Việt Nam lần thứ II (25/4/1961), nhưng bản thân câu nói đã được Người dùng từ Đại hội hợp nhất Việt Minh – Liên Việt năm 1951.",
+    "referenceUrl": "https://baoquankhu7.vn/loi-bac-ho-day-ngay-nay-nam-xua-doan-ket-doan-ket-dai-doan-ket-thanh-cong-thanh-cong-dai-thanh-cong-2027408714-008429s34810gs",
+    "correctUsage": "Khi trích, nên nói rõ đây là câu Người nhắc lại nhiều lần, không phải một câu nói duy nhất trong một dịp."
+  },
+  {
+    "id": "audit-dang-dao-duc",
+    "quote": "Đảng ta là đạo đức, là văn minh.",
+    "verdict": "dung-nguyen-van",
+    "verdictLabel": "Nguyên văn",
+    "evidence": "Câu này ở bài nói tại Lễ kỷ niệm 30 năm Ngày thành lập Đảng, ngày 3/1/1960. Một số bài viết gán câu này cho Di chúc — không đúng; Di chúc viết “Đảng ta là một đảng cầm quyền…”.",
+    "referenceUrl": "https://www.qdnd.vn/ky-niem-130-nam-ngay-sinh-chu-tich-ho-chi-minh/dang-cam-quyen-theo-tu-tuong-ho-chi-minh/de-dang-ta-luon-la-dao-duc-la-van-minh-618060",
+    "correctUsage": "Phân biệt hai câu: “là đạo đức, là văn minh” (1960) và “là một đảng cầm quyền” (Di chúc)."
+  },
+  {
+    "id": "audit-van-hoa-soi-duong",
+    "quote": "Văn hóa soi đường cho quốc dân đi.",
+    "verdict": "rut-gon",
+    "verdictLabel": "Bản rút gọn",
+    "evidence": "Nguyên văn trong diễn văn khai mạc Hội nghị Văn hóa toàn quốc lần thứ nhất (24/11/1946) là: “Văn hóa phải soi đường cho quốc dân đi.” Chữ “phải” mang nghĩa yêu cầu, trách nhiệm — khác với cách đọc như một lời mô tả.",
+    "referenceUrl": "https://baocaobang.vn/-2583.html",
+    "correctUsage": "Giữ chữ “phải” khi trích, và nêu rõ đây là một yêu cầu với đội ngũ làm văn hóa, không chỉ là một khẩu hiệu đẹp."
+  },
+  {
+    "id": "audit-mot-dan-toc-dot",
+    "quote": "Một dân tộc dốt là một dân tộc yếu.",
+    "verdict": "dung-nguyen-van",
+    "verdictLabel": "Nguyên văn",
+    "evidence": "Người nói trong phiên họp đầu tiên của Hội đồng Chính phủ nước Việt Nam Dân chủ Cộng hòa, ngày 3/9/1945, khi đề nghị mở chiến dịch chống nạn mù chữ.",
+    "referenceUrl": "https://custa.cantho.gov.vn/phong-trao-binh-dan-hoc-vu-sau-ngay-quoc-khanh-02-9-1945",
+    "correctUsage": "Câu này thường bị ghi sai bối cảnh thành “phát biểu tại lễ khai giảng”. Đây là một phiên họp chính phủ, một ngày sau ngày đọc Tuyên ngôn Độc lập."
+  },
+  {
+    "id": "audit-nuoc-vn-la-mot",
+    "quote": "Nước Việt Nam là một, dân tộc Việt Nam là một.",
+    "verdict": "co-dien-ban-khac",
+    "verdictLabel": "Có dị bản — cần phân biệt",
+    "evidence": "Câu gần gũi nhất với nội dung này trong Thư gửi đồng bào Nam Bộ (Báo Cứu quốc số 255, ngày 1/6/1946) là: “Đồng bào Nam Bộ là dân nước Việt Nam. Sông có thể cạn, núi có thể mòn, song chân lý đó không bao giờ thay đổi.” Còn “Nước Việt Nam ta là một / Dân tộc Việt Nam ta là một / Dù cho sông cạn đá mòn / Nhân dân Nam, Bắc là con một nhà” là thơ chúc Tết xuân năm 1963.",
+    "referenceUrl": "https://luutruvn.com/thu-cua-chu-tich-ho-chi-minh-gui-dong-bao-nam-bo-truoc-khi-sang-phap-dam-phan-nam-1946/",
+    "correctUsage": "Không trộn hai văn bản 1946 và 1963 vào cùng một trích dẫn. Nếu dùng “Nước Việt Nam là một”, nên dẫn kèm nguồn cụ thể."
+  },
+  {
+    "id": "audit-khong-co-gi-quy-hon",
+    "quote": "Không có gì quý hơn độc lập, tự do.",
+    "verdict": "dung-nguyen-van",
+    "verdictLabel": "Nguyên văn",
+    "evidence": "Lời kêu gọi đồng bào và chiến sĩ cả nước, 17/7/1966; đăng Báo Nhân dân số 4484 và phát trên Đài Tiếng nói Việt Nam. Bản thảo hiện được lưu giữ, thuộc nhóm bảo vật quốc gia.",
+    "referenceUrl": "https://baotanglichsu.vn/vi/Articles/3097/19364/17-7-1966-chu-tich-ho-chi-minh-ra-loi-keu-goi-chong-my-cuu-nuoc-khang-djinh-chan-ly-khong-co-gi-quy-hon-djoc-lap-tu-do.html",
+    "correctUsage": "Nên dẫn kèm đoạn nối tiếp “Đến ngày thắng lợi, nhân dân ta sẽ xây dựng lại đất nước ta đàng hoàng hơn, to đẹp hơn!” để thấy đây là câu nói về cả giành độc lập và xây dựng sau chiến tranh."
+  },
+  {
+    "id": "audit-di-bat-bien",
+    "quote": "Dĩ bất biến, ứng vạn biến.",
+    "verdict": "dung-nguyen-van",
+    "verdictLabel": "Nguyên văn — câu Người dùng lại",
+    "evidence": "Ngày 31/5/1946, trước khi sang Pháp, Người giao quyền Chủ tịch nước cho cụ Huỳnh Thúc Kháng và dặn với tinh thần ấy; câu nói được ghi lại trên tuần báo Đồng minh số 44 (2/6/1946) và sau này được nhắc lại phổ biến.",
+    "referenceUrl": "https://baoquocte.vn/chuyen-ke-ve-cau-noi-di-bat-bien-ung-van-bien-cua-chu-tich-ho-chi-minh-ngay-3151946-146838.html",
+    "correctUsage": "Đây là câu chữ Hán cổ mà Người dùng để đúc kết phương châm của mình — không nên tách khỏi bối cảnh “giữ vững mục tiêu độc lập, mềm dẻo về sách lược”."
+  },
+  {
+    "id": "audit-cnxh-dan-giau",
+    "quote": "Chủ nghĩa xã hội là làm sao cho dân giàu, nước mạnh.",
+    "verdict": "tinh-than",
+    "verdictLabel": "Tinh thần đúng — nguồn chưa thống nhất",
+    "evidence": "Tinh thần này xuất hiện xuyên suốt nhiều bài nói, bài viết về chủ nghĩa xã hội (khoảng 1955–1968), nhưng các tài liệu trích dẫn khác nhau về câu chữ và vị trí. Một số dị bản đáng tin hơn vì gắn với ngữ cảnh cụ thể, ví dụ: “Xã hội ngày càng tiến, vật chất ngày càng tăng, tinh thần ngày càng tốt, đó là chủ nghĩa xã hội.”",
+    "referenceUrl": "https://moj.gov.vn/qt/tintuc/Pages/thong-tin-khac.aspx?ItemID=3212",
+    "correctUsage": "Khi viết bài, nên dùng những câu có nguồn rõ, hoặc nêu rõ đây là “tinh thần trong nhiều bài nói của Người” thay vì để trong dấu ngoặc kép như một câu duy nhất."
+  },
+  {
+    "id": "audit-cau-hoi-cai-gi",
+    "quote": "Không có việc gì khó, chỉ sợ lòng không bền. Đào núi và lấp biển, quyết chí ắt làm nên.",
+    "verdict": "dung-nguyen-van",
+    "verdictLabel": "Nguyên văn",
+    "evidence": "Trung tuần tháng 9/1950, trên đường đi Chiến dịch Biên giới, Người ghé thăm một đơn vị thanh niên xung phong làm đường và tặng bốn câu thơ này.",
+    "referenceUrl": "https://hochiminh.vn/tin-tuc/chu-tich-ho-chi-minh-voi-chien-dich-bien-gioi-1950-3414",
+    "correctUsage": "Nhiều nơi ghi năm 1948 hoặc “thơ Bác tặng thanh niên” chung chung. Bối cảnh cụ thể là chiến dịch Biên giới 1950."
+  }
+]

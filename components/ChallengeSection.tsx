@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import QuizGame from "./QuizGame";
 import QuoteGallery from "./QuoteGallery";
+import CitationGame from "./CitationGame";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -15,7 +16,7 @@ const fadeUp = {
 
 export default function ChallengeSection() {
   return (
-    <section id="thach-thuc" className="bg-charcoal px-6 py-20 text-cream sm:px-10 lg:px-16">
+    <section id="thach-thuc" className="bg-charcoal px-6 py-16 text-cream sm:px-10 lg:px-16">
       <div className="mx-auto max-w-5xl">
         <motion.p
           className="text-center font-sans text-sm uppercase tracking-wideish text-gold/80"
@@ -48,7 +49,50 @@ export default function ChallengeSection() {
           <QuizGame />
         </motion.div>
 
-        <div className="mt-20">
+        <div className="mt-14">
+          <motion.p
+            className="text-center font-sans text-sm uppercase tracking-wideish text-gold/80"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0}
+          >
+            Trò chơi kiểm chứng
+          </motion.p>
+          <motion.h3
+            className="mt-3 text-center font-serif text-2xl font-semibold"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0.1}
+          >
+            Câu này của ai?
+          </motion.h3>
+          <motion.p
+            className="mx-auto mt-3 max-w-xl text-center text-sm text-cream/60"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0.15}
+          >
+            Nhiều câu nói hay bị gán nhầm cho Bác Hồ — chọn tác giả đúng rồi đọc
+            phần giải thích.
+          </motion.p>
+          <motion.div
+            className="mt-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <CitationGame />
+          </motion.div>
+        </div>
+
+        <div className="mt-14">
           <motion.p
             className="text-center font-sans text-sm uppercase tracking-wideish text-gold/80"
             initial="hidden"
@@ -67,8 +111,18 @@ export default function ChallengeSection() {
             variants={fadeUp}
             custom={0.1}
           >
-            Lật thẻ, đọc bài học, giữ lại điều truyền cảm hứng
+            Lật thẻ, đọc nguồn, lưu lại điều bạn muốn mang theo
           </motion.h3>
+          <motion.p
+            className="mx-auto mt-3 max-w-xl text-center text-sm text-cream/60"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0.15}
+          >
+            Tám trích dẫn đã đối chiếu nguồn, lọc theo chuyên đề.
+          </motion.p>
           <QuoteGallery />
         </div>
       </div>

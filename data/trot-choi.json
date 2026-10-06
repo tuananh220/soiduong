@@ -1,0 +1,112 @@
+{
+  "title": "Câu này của ai?",
+  "intro": "Nhiều câu nói hay bị gán nhầm cho Bác Hồ. Trò chơi này luyện đúng kỹ năng quan trọng nhất khi trích dẫn: biết câu đó thật sự của ai và từ đâu.",
+  "authors": [
+    "Hồ Chí Minh",
+    "Thanh Tịnh",
+    "Minh Huệ",
+    "V.I. Lê-nin",
+    "Khổng Tử",
+    "Ca dao Việt Nam"
+  ],
+  "items": [
+    {
+      "id": "game-1",
+      "text": "Không có gì quý hơn độc lập, tự do.",
+      "author": "Hồ Chí Minh",
+      "explain": "Lời kêu gọi đồng bào và chiến sĩ cả nước, ngày 17/7/1966, đăng trên Báo Nhân dân số 4484 và phát trên Đài Tiếng nói Việt Nam. Đây là câu gắn với chính Người, không phải câu Bác dẫn lại.",
+      "sourceUrl": "https://baotanglichsu.vn/vi/Articles/3097/19364/17-7-1966-chu-tich-ho-chi-minh-ra-loi-keu-goi-chong-my-cuu-nuoc-khang-djinh-chan-ly-khong-co-gi-quy-hon-djoc-lap-tu-do.html"
+    },
+    {
+      "id": "game-2",
+      "text": "Dễ trăm lần không dân cũng chịu, khó vạn lần dân liệu cũng xong.",
+      "author": "Thanh Tịnh",
+      "explain": "Hai câu này nằm trong bài thơ “Dân no thì lính cũng no” của nhà thơ Thanh Tịnh (1948). Bác Hồ nhiều lần nhắc lại tinh thần ấy (ví dụ ngày 18/1/1967, với nguyên văn “Dễ mười lần… khó trăm lần…”), nhưng không phải tác giả.",
+      "sourceUrl": "https://vi.wikiquote.org/wiki/Th%E1%BA%A3o_lu%E1%BA%ADn:H%E1%BB%93_Ch%C3%AD_Minh"
+    },
+    {
+      "id": "game-3",
+      "text": "Học, học nữa, học mãi.",
+      "author": "V.I. Lê-nin",
+      "explain": "Khẩu hiệu nổi tiếng của V.I. Lê-nin. Ngày 6/5/1950, tại Hội nghị toàn quốc lần thứ nhất về công tác huấn luyện và học tập, Bác Hồ dẫn lại: “Lê-nin khuyên chúng ta: Học, học nữa, học mãi. Mỗi người phải ghi nhớ và thực hành điều đó.”",
+      "sourceUrl": "https://kientho.thanhhoa.gov.vn/van-hoa-xa-hoi/ngay-nay-nam-xua-6-5-bac-ho-can-dan-noi-theo-lenin-hoc-hoc-nua-hoc-mai-684579"
+    },
+    {
+      "id": "game-4",
+      "text": "Một tấm gương sống còn có giá trị hơn một trăm bài diễn văn tuyên truyền.",
+      "author": "Hồ Chí Minh",
+      "explain": "Câu này có từ ngày 20/5/1924, trong thư gửi đồng chí Pêtơrốp — sớm hơn nhiều so với cách ghi “bài nói năm 1961” thường gặp.",
+      "sourceUrl": "https://daibieunhandan.vn/mot-tam-guong-song-con-co-gia-tri-hon-mot-tram-bai-dien-van-tuyen-truyen-post266003.html"
+    },
+    {
+      "id": "game-5",
+      "text": "Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công.",
+      "author": "Hồ Chí Minh",
+      "explain": "Bác nói tại Đại hội đại biểu Mặt trận Tổ quốc Việt Nam lần thứ II (25/4/1961), nhưng câu này đã được Người dùng từ Đại hội hợp nhất Việt Minh – Liên Việt năm 1951.",
+      "sourceUrl": "https://baoquankhu7.vn/loi-bac-ho-day-ngay-nay-nam-xua-doan-ket-doan-ket-dai-doan-ket-thanh-cong-thanh-cong-dai-thanh-cong-2027408714-008429s34810gs"
+    },
+    {
+      "id": "game-6",
+      "text": "Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao.",
+      "author": "Ca dao Việt Nam",
+      "explain": "Đây là ca dao, không phải câu nói của Bác. Khi viết bài, nếu muốn dùng Bác để nói về đoàn kết, hãy chọn những câu có nguồn rõ như “Đoàn kết, đoàn kết, đại đoàn kết…”.",
+      "sourceNote": "Ca dao Việt Nam, lưu hành trong dân gian — không gắn với một văn bản cụ thể."
+    },
+    {
+      "id": "game-7",
+      "text": "Anh đội viên nhìn Bác, càng nhìn lại càng thương.",
+      "author": "Minh Huệ",
+      "explain": "Đây là thơ trong bài “Đêm nay Bác không ngủ” của nhà thơ Minh Huệ (1951) — viết về Bác, nhưng không phải lời của Bác.",
+      "sourceUrl": "https://vi.wikipedia.org/wiki/%C4%90%C3%AAm_nay_B%C3%A1c_kh%C3%B4ng_ng%E1%BB%A7"
+    },
+    {
+      "id": "game-8",
+      "text": "Đảng ta là đạo đức, là văn minh.",
+      "author": "Hồ Chí Minh",
+      "explain": "Câu ở bài nói tại Lễ kỷ niệm 30 năm Ngày thành lập Đảng, 3/1/1960. Nhiều tài liệu gán câu này cho Di chúc — không đúng; Di chúc viết “Đảng ta là một đảng cầm quyền…”.",
+      "sourceUrl": "https://www.qdnd.vn/ky-niem-130-nam-ngay-sinh-chu-tich-ho-chi-minh/dang-cam-quyen-theo-tu-tuong-ho-chi-minh/de-dang-ta-luon-la-dao-duc-la-van-minh-618060"
+    },
+    {
+      "id": "game-9",
+      "text": "Cần, Kiệm, Liêm, Chính là nền tảng của Đời sống mới, nền tảng của Thi đua ái quốc.",
+      "author": "Hồ Chí Minh",
+      "explain": "Câu mở đầu tác phẩm “Cần, kiệm, liêm, chính”, in thành bốn bài trên Báo Cứu quốc các ngày 30, 31/5 và 1, 2/6/1949, ký bút danh Lê Quyết Thắng.",
+      "sourceUrl": "https://cand.com.vn/Cong-an/Tac-pham-Can-kiem-liem-chinh-cua-Chu-tich-Ho-Chi-Minh-i467559/"
+    },
+    {
+      "id": "game-10",
+      "text": "Học không biết chán, dạy không biết mỏi.",
+      "author": "Khổng Tử",
+      "explain": "Lời của Khổng Tử. Tại Hội nghị về công tác huấn luyện và học tập (6/5/1950), Bác Hồ cho treo câu này trong phòng họp, bên cạnh lời của Lê-nin.",
+      "sourceUrl": "https://www.cdspkg.edu.vn/goc-hoc-tap/hoc-lam-theo-bac/412-bac-ho-tam-guong-sang-ve-tu-hoc"
+    },
+    {
+      "id": "game-11",
+      "text": "Vì lợi ích mười năm thì phải trồng cây, vì lợi ích trăm năm thì phải trồng người.",
+      "author": "Hồ Chí Minh",
+      "explain": "Bác nói tại lớp học chính trị của giáo viên cấp II, cấp III toàn miền Bắc, ngày 13/9/1958 — câu này là của chính Người, không phải câu dẫn lại từ cổ nhân.",
+      "sourceUrl": "http://baoquankhu4.com.vn/chinh-tri/loi-bac-ho-day-ngay-nay-nam-xua/vi-loi-ich-muoi-nam-thi-phai-trong-cay-vi-loi-ich-tram-nam-t.html"
+    },
+    {
+      "id": "game-12",
+      "text": "Đạo đức cách mạng không phải trên trời sa xuống. Nó do đấu tranh, rèn luyện bền bỉ hằng ngày mà phát triển và củng cố.",
+      "author": "Hồ Chí Minh",
+      "explain": "Câu kết tác phẩm “Đạo đức cách mạng”, bút danh Trần Lực, Tạp chí Học tập số 12 năm 1958.",
+      "sourceUrl": "https://hochiminh.vn/tin-tuc/dao-duc-cach-mang-cua-chu-tich-ho-chi-minh-1431"
+    },
+    {
+      "id": "game-13",
+      "text": "Chiến tranh có thể kéo dài 5 năm, 10 năm, 20 năm hoặc lâu hơn nữa. Hà Nội, Hải Phòng và một số thành phố, xí nghiệp có thể bị tàn phá, song nhân dân Việt Nam quyết không sợ!",
+      "author": "Hồ Chí Minh",
+      "explain": "Trích lời kêu gọi đồng bào và chiến sĩ cả nước, 17/7/1966 — cùng văn bản với câu “Không có gì quý hơn độc lập, tự do”.",
+      "sourceUrl": "https://tuoitre.vn/loi-keu-goi-cua-chu-tich-ho-chi-minh-50-nam-truoc-1138453.htm"
+    },
+    {
+      "id": "game-14",
+      "text": "Một dân tộc dốt là một dân tộc yếu.",
+      "author": "Hồ Chí Minh",
+      "explain": "Bác nói trong phiên họp đầu tiên của Hội đồng Chính phủ nước Việt Nam Dân chủ Cộng hòa, ngày 3/9/1945 — một ngày sau khi đọc Tuyên ngôn Độc lập — khi đề nghị mở chiến dịch chống nạn mù chữ.",
+      "sourceUrl": "https://custa.cantho.gov.vn/phong-trao-binh-dan-hoc-vu-sau-ngay-quoc-khanh-02-9-1945"
+    }
+  ]
+}

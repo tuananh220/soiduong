@@ -20,6 +20,8 @@ const config: Config = {
         gold: {
           DEFAULT: "#D4AF37",
           soft: "#E7CD7A",
+          // Vàng đậm: dùng cho CHỮ trên nền sáng (5,4–6,0:1, đạt WCAG AA).
+          deep: "#7A5C12",
         },
         charcoal: {
           DEFAULT: "#1C1A17",

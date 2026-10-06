@@ -1,0 +1,79 @@
+[
+  {
+    "day": 1,
+    "title": "Điểm xuất phát và chí hướng",
+    "topicId": "doc-lap-cnxh",
+    "focus": "Vì sao mọi hành trình lớn đều bắt đầu từ việc hiểu rõ điểm xuất phát của mình.",
+    "tasks": [
+      "Đọc mục “Độc lập dân tộc gắn liền với chủ nghĩa xã hội” và lưu 1 trích dẫn vào Sổ tay.",
+      "Làm 2 thẻ mốc 1890 và 1911 trong phần Thẻ kiến thức nền.",
+      "Ghi 3 dòng: điều gì ở hoàn cảnh của bạn đang là lợi thế chưa được dùng?"
+    ]
+  },
+  {
+    "day": 2,
+    "title": "Nhà nước của dân, do dân, vì dân",
+    "topicId": "dang-va-nha-nuoc",
+    "focus": "Phân biệt rõ người được giao quyền và người thụ hưởng trong một tập thể.",
+    "tasks": [
+      "Đọc chuyên đề “Đảng trong sạch, Nhà nước của dân, do dân, vì dân”.",
+      "Chơi vòng “Câu này của ai?” với 5 câu bất kỳ.",
+      "Tìm trong lớp/câu lạc bộ một việc đang bị dồn cho một người và đề xuất cách chia lại."
+    ]
+  },
+  {
+    "day": 3,
+    "title": "Sức mạnh của đoàn kết",
+    "topicId": "dai-doan-ket",
+    "focus": "Đoàn kết không xóa khác biệt — nó đặt khác biệt vào đúng tỉ lệ.",
+    "tasks": [
+      "Đọc chuyên đề “Đại đoàn kết toàn dân tộc”.",
+      "Làm 3 thẻ kiến thức nền về quá trình hình thành tư tưởng (1921–1930, 1930–1945, 1945–1969).",
+      "Kể lại một xung đột nhóm cũ và viết ra mục tiêu chung mà cả hai bên cùng muốn."
+    ]
+  },
+  {
+    "day": 4,
+    "title": "Giữ nguyên tắc, mềm dẻo trong cách làm",
+    "topicId": "doan-ket-quoc-te",
+    "focus": "“Dĩ bất biến, ứng vạn biến” áp dụng cho một mục tiêu cá nhân cụ thể.",
+    "tasks": [
+      "Đọc chuyên đề về đoàn kết quốc tế và phương châm “dĩ bất biến, ứng vạn biến”.",
+      "Viết hai cột: “điều tôi không đánh đổi” và “cách làm tôi sẵn sàng thay đổi”.",
+      "Làm lại một câu quiz bạn từng trả lời sai ở Trạm thách thức."
+    ]
+  },
+  {
+    "day": 5,
+    "title": "Học suốt đời và chiến lược trồng người",
+    "topicId": "van-hoa-giao-duc",
+    "focus": "Việc học chỉ có giá trị khi được dùng cho người khác.",
+    "tasks": [
+      "Đọc chuyên đề “Văn hóa soi đường, học tập suốt đời và chiến lược trồng người”.",
+      "Chọn một kỹ năng đang học và dạy lại cho một người trong 30 phút.",
+      "Lưu câu hỏi còn thắc mắc của bạn vào Ghi chú trong Sổ tay."
+    ]
+  },
+  {
+    "day": 6,
+    "title": "Đạo đức là gốc",
+    "topicId": "dao-duc-neu-guong",
+    "focus": "Nhân cách được đo ở những lúc không ai nhìn.",
+    "tasks": [
+      "Đọc chuyên đề “Đạo đức cách mạng và sức mạnh của nêu gương”.",
+      "Chơi “Câu này của ai?” đến khi đạt trên 80%.",
+      "Thực hành một thói quen “kiệm” trong 24 giờ và ghi lại kết quả."
+    ]
+  },
+  {
+    "day": 7,
+    "title": "Ôn tập và tự kiểm tra",
+    "topicId": "doc-lap-cnxh",
+    "focus": "Hệ thống lại toàn bộ tuần bằng chính sổ tay của bạn.",
+    "tasks": [
+      "Làm hết 7 câu quiz tình huống trong Trạm thách thức.",
+      "Ôn toàn bộ thẻ kiến thức nền đã đánh dấu.",
+      "Mở Sổ tay, xuất file Markdown hoặc in PDF để nộp/lưu lại."
+    ]
+  }
+]

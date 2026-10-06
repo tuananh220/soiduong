@@ -1,0 +1,49 @@
+name: Kiểm chứng nội dung & build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Cài dependencies
+        run: npm ci
+
+      - name: Kiểm chứng nội dung học thuật
+        # Bất biến nội dung: mọi trích dẫn có nguồn + link, không nêu số trang,
+        # câu không phải nguyên văn phải có ghi chú, topicId phải tồn tại.
+        run: npm run verify:content
+
+      - name: Kiểm tra kiểu
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build production
+        run: npm run build
+
+  links:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Không cài dependencies: script chỉ dùng Node thuần.
+      - name: Kiểm tra liên kết nguồn
+        continue-on-error: true
+        run: node scripts/verify-content.mjs --check-links

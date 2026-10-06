@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font token: dùng chung cho CSS và cho texture chữ tiếng Việt trong WebGL. */
+:root {
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -9,6 +15,17 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Nút "Giảm hiệu ứng" trong trang: áp dụng đúng các quy tắc như trên,
+   để người dùng máy yếu chủ động tắt chuyển động mà không cần đổi cài đặt OS. */
+html[data-reduce-effects="true"] *,
+html[data-reduce-effects="true"] *::before,
+html[data-reduce-effects="true"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
 }
 
 html {
@@ -48,7 +65,49 @@ body {
 }
 .flip-face {
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
 }
 .flip-face-back {
   transform: rotateY(180deg);
+}
+
+/* Ẩn thanh cuộn cho dải điều hướng ngang trên di động */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Trải nghiệm in: giữ lại nội dung chữ, bỏ các khối 3D và điều hướng */
+@media print {
+  header,
+  nav,
+  canvas,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background-color: #ffffff;
+    color: #1c1a17;
+  }
+  section {
+    padding: 12px 0 !important;
+    background: transparent !important;
+    color: #1c1a17 !important;
+  }
+  section * {
+    color: #1c1a17 !important;
+    border-color: #d8d2c6 !important;
+    background-image: none !important;
+  }
+}
+
+/* Khung 3D (địa cầu): vuốt dọc để cuộn trang, kéo ngang để xoay, chụm hai ngón
+   để thu phóng. OrbitControls mặc định đặt touch-action: none và chặn cuộn. */
+.globe-canvas canvas,
+.globe-canvas [data-engine] {
+  touch-action: pan-y !important;
 }
