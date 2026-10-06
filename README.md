@@ -64,7 +64,8 @@ soiduong/
 ├── docs/
 │   ├── KIEM-DUYET-NOI-DUNG.md # Ghi chép quá trình kiểm chứng nội dung
 │   ├── REVIEW-3D-TUONG-TAC.md # Rà soát và sửa lỗi tương tác 3D
-│   └── DANH-GIA-GIAO-DIEN.md  # Đánh giá giao diện theo số đo + kế hoạch âm thanh
+│   ├── DANH-GIA-GIAO-DIEN.md  # Đánh giá giao diện theo số đo + kế hoạch âm thanh
+│   └── PHAP-LY-NHUNG-AUDIO.md # 4 mức nhúng tư liệu: rủi ro pháp lý + mẫu xin phép
 ├── public/audio/           # Clip mp3 tạo sẵn (thoại, không nhạc nền)
 ├── tailwind.config.ts      # Token màu: burgundy / cream / gold / charcoal (+ gold.deep cho chữ trên nền sáng)
 ├── next.config.js
@@ -182,7 +183,10 @@ Ba nguyên tắc bắt buộc:
 2. **Không tạo giọng AI nhái giọng Bác Hồ** dưới bất kỳ hình thức nào. Hai clip trong
    `public/audio/` là giọng tổng hợp đọc lại kịch bản đã kiểm duyệt, và được ghi nhãn
    rõ như vậy ngay trên giao diện.
-3. **Phân biệt rõ hai loại**: `"voice": "giong-nguoi"` (bản ghi âm tiếng nói của Người)
+3. **Chỉ liên kết, không nhúng thẳng**: phân tích đầy đủ về bốn mức "nhúng" (liên kết /
+   iframe / hotlink / tải về host lại), căn cứ pháp lý theo Điều 25, 27, 34 Luật SHTT và
+   Luật Lưu trữ 2024, kèm **mẫu văn bản xin phép**: xem `docs/PHAP-LY-NHUNG-AUDIO.md`.
+4. **Phân biệt rõ hai loại**: `"voice": "giong-nguoi"` (bản ghi âm tiếng nói của Người)
    và `"voice": "co-trich-doan"` (phim tài liệu có trích đoạn, phần còn lại là lời bình).
    `npm run verify:content` chặn mọi liên kết không thuộc danh sách nguồn chính thức.
 
