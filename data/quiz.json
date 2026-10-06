@@ -53,5 +53,27 @@
       { "id": "d", "text": "Dùng AI rồi đổi vài từ để tránh bị phát hiện", "correct": false }
     ],
     "explain": "Công cụ thay đổi liên tục — hôm qua là sách, hôm nay là AI. Cái không đổi là năng lực tư duy độc lập và trách nhiệm với sản phẩm mang tên mình."
+  },
+  {
+    "id": "q6",
+    "prompt": "Bạn thấy một câu nói rất hay được gán cho Bác Hồ, nhưng không rõ nguồn. Cách xử lý đúng tinh thần “có trách nhiệm với trích dẫn” là:",
+    "options": [
+      { "id": "a", "text": "Đăng lại ngay vì nội dung tích cực", "correct": false },
+      { "id": "b", "text": "Tra trong Hồ Chí Minh toàn tập hoặc tư liệu chính thống trước khi dùng", "correct": true },
+      { "id": "c", "text": "Chỉ cần ghi “Theo Bác Hồ” là đủ", "correct": false },
+      { "id": "d", "text": "Không dùng trích dẫn nữa để tránh sai", "correct": false }
+    ],
+    "explain": "Không ít câu nói hay bị gán sai cho Bác — ví dụ “Dễ trăm lần không dân cũng chịu, khó vạn lần dân liệu cũng xong” thực ra là thơ của Thanh Tịnh. Kiểm tra nguồn là một hành động tôn trọng cả người đọc và tư liệu."
+  },
+  {
+    "id": "q7",
+    "prompt": "Bạn vừa tốt nghiệp nhưng nhận thấy công cụ và quy trình trong ngành thay đổi rất nhanh. Lời dạy nào của Bác phù hợp nhất để định hướng cách học tiếp?",
+    "options": [
+      { "id": "a", "text": "“Tốt nghiệp là hoàn thành việc học”", "correct": false },
+      { "id": "b", "text": "“Học hỏi là một việc phải tiếp tục suốt đời… không ai có thể tự cho mình đã biết đủ rồi”", "correct": true },
+      { "id": "c", "text": "“Chỉ học khi có yêu cầu của công việc”", "correct": false },
+      { "id": "d", "text": "“Học để có bằng cấp cao hơn”", "correct": false }
+    ],
+    "explain": "Lời dạy năm 1956 đã nói đúng điều của thời đại số: học không có điểm kết thúc, và học phải gắn với công việc thực tế — “không học thì không theo kịp, công việc nó sẽ gạt mình lại phía sau”."
   }
 ]

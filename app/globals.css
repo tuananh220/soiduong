@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Font token: dùng chung cho CSS và cho texture chữ tiếng Việt trong WebGL. */
+:root {
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -51,4 +57,37 @@ body {
 }
 .flip-face-back {
   transform: rotateY(180deg);
+}
+
+/* Ẩn thanh cuộn cho dải điều hướng ngang trên di động */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Trải nghiệm in: giữ lại nội dung chữ, bỏ các khối 3D và điều hướng */
+@media print {
+  header,
+  nav,
+  canvas,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background-color: #ffffff;
+    color: #1c1a17;
+  }
+  section {
+    padding: 12px 0 !important;
+    background: transparent !important;
+    color: #1c1a17 !important;
+  }
+  section * {
+    color: #1c1a17 !important;
+    border-color: #d8d2c6 !important;
+    background-image: none !important;
+  }
 }

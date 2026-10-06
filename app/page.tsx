@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
 import GenZCards from "@/components/GenZCards";
 import ChallengeSection from "@/components/ChallengeSection";
+import ScrollProgress from "@/components/ScrollProgress";
+import ThoughtSection from "@/components/ThoughtSection";
+import NotebookSection from "@/components/NotebookSection";
 
-// 3D canvases must render client-side only.
+// Các khung 3D chỉ render phía client.
 const Hero3D = dynamic(() => import("@/components/Hero3D"), {
   ssr: false,
   loading: () => <div className="h-[320px] w-full sm:h-[420px] md:h-[520px]" />,
@@ -17,7 +20,8 @@ const GlobeSection = dynamic(() => import("@/components/GlobeSection"), {
 
 export default function Home() {
   return (
-    <main>
+    <main id="top">
+      <ScrollProgress />
       <SiteHeader />
 
       <section className="relative overflow-hidden bg-cream px-6 pb-16 pt-28 sm:px-10 sm:pt-32 lg:px-16">
@@ -73,10 +77,16 @@ export default function Home() {
           >
             <p className="font-medium text-burgundy">Ghi chú lịch sử:</p>
             <p className="mt-1">
-              Một số câu nói và bài học ở đây được rút ra từ tư tưởng, lời nói,
-              và hành động của Người, không phải lúc nào cũng là trích dẫn
-              nguyên văn. Mục tiêu là giúp thế hệ trẻ hiểu giá trị và cách vận
-              dụng vào đời sống hiện đại một cách đúng mực và có trách nhiệm.
+              Các trích dẫn trong phiên bản này đã được đối chiếu với Hồ Chí Minh:
+              Toàn tập và tư liệu báo chí gốc; câu nào là bản rút gọn hoặc tinh
+              thần đều được ghi chú ngay tại chỗ.{" "}
+              <a
+                href="#tu-tuong"
+                className="focus-ring font-medium text-burgundy underline decoration-burgundy/30 underline-offset-4 hover:decoration-burgundy"
+              >
+                Xem bảng kiểm chứng trích dẫn
+              </a>
+              .
             </p>
           </motion.div>
 
@@ -96,6 +106,12 @@ export default function Home() {
               Khám phá hành trình
             </a>
             <a
+              href="#tu-tuong"
+              className="focus-ring rounded-full border border-charcoal/20 px-7 py-3 text-sm font-medium text-charcoal transition-colors hover:border-charcoal/50"
+            >
+              Sáu chuyên đề tư tưởng
+            </a>
+            <a
               href="#thach-thuc"
               className="focus-ring rounded-full border border-charcoal/20 px-7 py-3 text-sm font-medium text-charcoal transition-colors hover:border-charcoal/50"
             >
@@ -106,11 +122,29 @@ export default function Home() {
       </section>
 
       <GlobeSection />
+      <ThoughtSection />
       <GenZCards />
       <ChallengeSection />
+      <NotebookSection />
 
-      <footer className="bg-cream px-6 py-10 text-center text-xs text-charcoal/50 sm:px-10 lg:px-16">
-        Soi Đường — dự án học liệu tương tác, xây dựng cho mục đích giáo dục.
+      <footer className="bg-cream px-6 py-10 text-center text-xs leading-relaxed text-charcoal/55 sm:px-10 lg:px-16">
+        <p>
+          Soi Đường — dự án học liệu tương tác, xây dựng cho mục đích giáo dục.
+        </p>
+        <p className="mx-auto mt-2 max-w-2xl">
+          Nội dung trích dẫn được đối chiếu với Hồ Chí Minh: Toàn tập (NXB Chính trị
+          quốc gia), Di chúc và các tư liệu báo chí gốc; ảnh tư liệu thuộc Wikimedia
+          Commons với giấy phép tự do. Sổ tay ôn tập lưu dữ liệu ngay trên trình duyệt
+          của bạn.
+        </p>
+        <p className="mt-2">
+          <a
+            href="#tu-tuong"
+            className="focus-ring text-burgundy underline decoration-burgundy/30 underline-offset-4 hover:decoration-burgundy"
+          >
+            Nguồn &amp; kiểm chứng trích dẫn
+          </a>
+        </p>
       </footer>
     </main>
   );

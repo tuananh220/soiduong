@@ -1,0 +1,58 @@
+{
+  "editorialPolicy": {
+    "title": "Chính sách nội dung",
+    "updated": "2026-10-06",
+    "items": [
+      "Mọi trích dẫn đều ghi rõ tác phẩm, bối cảnh và thời điểm; câu nào là bản rút gọn, dị bản hoặc tinh thần chứ không phải nguyên văn đều được ghi chú ngay tại chỗ.",
+      "Không nêu số trang trong các trích dẫn, vì số trang thay đổi giữa các lần xuất bản của Hồ Chí Minh toàn tập. Người đọc cần đối chiếu bản in chính thức khi trích dẫn cho bài luận.",
+      "Phần “Kiểm chứng trích dẫn” liệt kê cả những câu thường bị gán sai cho Chủ tịch Hồ Chí Minh, kèm cách dùng đúng.",
+      "Nội dung — và chỉ nội dung — của website này do nhóm học tập biên soạn lại trên tinh thần giáo dục; tư liệu gốc không thuộc về nhóm và không được dùng cho mục đích thương mại."
+    ]
+  },
+  "documents": [
+    {
+      "label": "Giáo trình",
+      "title": "Giáo trình Tư tưởng Hồ Chí Minh (dành cho bậc đại học không chuyên lý luận chính trị)",
+      "by": "NXB Chính trị quốc gia Sự thật",
+      "note": "Khung chương, khái niệm và luận điểm cốt lõi được đối chiếu theo giáo trình hiện hành. Các chuyên đề trên trang bám theo trật tự chương 3–6."
+    },
+    {
+      "label": "Văn bản gốc",
+      "title": "Hồ Chí Minh: Toàn tập",
+      "by": "NXB Chính trị quốc gia / Chính trị quốc gia Sự thật",
+      "note": "Nguồn đối chiếu câu chữ cho mọi trích dẫn nguyên văn trên trang."
+    },
+    {
+      "label": "Văn bản gốc",
+      "title": "Di chúc của Chủ tịch Hồ Chí Minh (bản 1965–1969)",
+      "by": "Bản công bố chính thức năm 1969",
+      "note": "Dùng cho các trích dẫn về Đảng cầm quyền, đoàn kết và thế hệ trẻ."
+    },
+    {
+      "label": "Báo chí tư liệu",
+      "title": "Báo Nhân dân số 4484 (17/7/1966); Báo Sự thật số 120 (15/10/1949); Báo Cứu quốc số 255 (1/6/1946); Tạp chí Học tập số 12 (1958)",
+      "by": "Tư liệu báo chí thời kỳ 1946–1966",
+      "note": "Ghi rõ số ra và ngày phát hành để người đọc có thể tra cứu lại."
+    },
+    {
+      "label": "Cơ quan tư liệu",
+      "title": "Trang thông tin về Chủ tịch Hồ Chí Minh; Bảo tàng Lịch sử Quốc gia; Bảo tàng Hồ Chí Minh",
+      "by": "Các cơ quan văn hóa, lịch sử trong nước",
+      "note": "Đối chiếu mốc thời gian, bối cảnh ra đời của các câu nói."
+    }
+  ],
+  "externalAssets": [
+    {
+      "label": "Ảnh tư liệu",
+      "title": "Hình ảnh minh hoạ trong phần “Hành trình”",
+      "by": "Wikimedia Commons",
+      "note": "Ảnh gốc thuộc các giấy phép tự do (phần lớn là public domain hoặc CC). Khi tái sử dụng, vui lòng mở lại trang ảnh gốc trên Wikimedia Commons để kiểm tra giấy phép và ghi nguồn."
+    },
+    {
+      "label": "Thư viện 3D",
+      "title": "three.js, @react-three/fiber, @react-three/drei, @react-three/postprocessing",
+      "by": "Các dự án mã nguồn mở tương ứng",
+      "note": "Toàn bộ mô hình 3D trên trang được dựng thủ tục bằng hình học cơ bản và texture sinh tại chỗ bằng Canvas API, không dùng file mô hình tải về."
+    }
+  ]
+}

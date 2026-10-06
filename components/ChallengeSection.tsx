@@ -67,8 +67,19 @@ export default function ChallengeSection() {
             variants={fadeUp}
             custom={0.1}
           >
-            Lật thẻ, đọc bài học, giữ lại điều truyền cảm hứng
+            Lật thẻ, đọc nguồn, lưu lại điều bạn muốn mang theo
           </motion.h3>
+          <motion.p
+            className="mx-auto mt-3 max-w-xl text-center text-sm text-cream/60"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            custom={0.15}
+          >
+            Tám trích dẫn đã đối chiếu nguồn, lọc theo chuyên đề. Câu nào bạn lưu sẽ
+            nằm trong Sổ tay ôn tập ở cuối trang.
+          </motion.p>
           <QuoteGallery />
         </div>
       </div>
