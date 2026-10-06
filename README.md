@@ -29,6 +29,7 @@ soiduong/
 │   ├── ThoughtSection.tsx  # SECTION 3 — sáu chuyên đề + kiểm chứng trích dẫn
 │   ├── ThoughtLab3D.tsx    #   3D: vòng xoay thẻ chuyên đề (CanvasTexture + Bloom)
 │   ├── QuoteSource.tsx     #   Nguồn trích dẫn + link tra cứu
+│   ├── ListenButton.tsx    #   Nút nghe dùng chung (không tự phát, chỉ một clip phát một lúc)
 │   ├── KnowledgeCards.tsx  # SECTION 4 — 12 thẻ kiến thức nền (hiện 6 thẻ, có nút xem thêm)
 │   ├── GenZCards.tsx       # SECTION 5 — thẻ tilt 3D bài học Gen Z
 │   ├── ChallengeSection.tsx# Bọc QuizGame + CitationGame + QuoteGallery
@@ -48,6 +49,7 @@ soiduong/
 │   ├── trot-choi.json      # 14 câu cho trò chơi "Câu này của ai?" + 6 nhãn tác giả
 │   ├── kien-thuc-nen.json  # 12 thẻ flashcard: định nghĩa, cơ sở, 5 thời kỳ, giá trị
 │   ├── lo-trinh.json       # Lộ trình 7 ngày (mỗi ngày 1 chuyên đề + việc nhỏ)
+│   ├── audio.json          # 2 clip thử nghiệm: file, thời lượng, scriptVersion để biết khi nào thu lại
 │   ├── nguon.json          # Chính sách nội dung, tư liệu đối chiếu, giấy phép tài sản
 │   ├── timeline.json       # 13 mốc lịch sử từ 1890 đến 1990
 │   ├── genz-cards.json     # Nội dung 3 thẻ bài học
@@ -59,8 +61,10 @@ soiduong/
 │   └── verify-content.yml  # CI: kiểm chứng nội dung → tsc → lint → build
 ├── docs/
 │   ├── KIEM-DUYET-NOI-DUNG.md # Ghi chép quá trình kiểm chứng nội dung
-│   └── REVIEW-3D-TUONG-TAC.md # Rà soát và sửa lỗi tương tác 3D
-├── tailwind.config.ts      # Token màu: burgundy / cream / gold / charcoal
+│   ├── REVIEW-3D-TUONG-TAC.md # Rà soát và sửa lỗi tương tác 3D
+│   └── DANH-GIA-GIAO-DIEN.md  # Đánh giá giao diện theo số đo + kế hoạch âm thanh
+├── public/audio/           # Clip mp3 tạo sẵn (thoại, không nhạc nền)
+├── tailwind.config.ts      # Token màu: burgundy / cream / gold / charcoal (+ gold.deep cho chữ trên nền sáng)
 ├── next.config.js
 ├── tsconfig.json
 └── package.json
@@ -141,6 +145,20 @@ soiduong/
   nền trắng để sổ tay in ra đọc được.
 - **Cập nhật nội dung**: chỉ cần sửa file JSON trong `/data`, không đụng vào
   component (kiểu dữ liệu suy ra trực tiếp từ JSON trong `lib/types.ts`).
+
+## Nội dung kèm âm thanh (bản thử nghiệm)
+
+- `data/audio.json` + `components/ListenButton.tsx`: nút nghe **không tự phát**,
+  chỉ một clip phát tại một thời điểm, có `aria-pressed`, thanh tiến độ và thời lượng.
+- Kịch bản audio lấy **nguyên văn** từ dữ liệu đã kiểm duyệt, mỗi clip ghi
+  `scriptVersion` (ví dụ `tu-tuong.json#doc-lap-cnxh/quotes[1]`) để biết khi nào nội
+  dung nguồn đổi thì phải thu lại.
+- **Không có nội dung nào chỉ tồn tại dưới dạng âm thanh**: bản chữ luôn nằm trên trang,
+  nên người khiếm thính và trình đọc màn hình không mất thông tin.
+- `npm run verify:content` kiểm luôn: file trong `public/` phải tồn tại, có
+  `scriptVersion`, thời lượng hợp lệ và bitrate tối thiểu 32 kbps.
+- Lộ trình mở rộng (ôn tập bằng tai, âm phản hồi trong game, podcast nhiều giọng) và
+  số đo giao diện đầy đủ: xem `docs/DANH-GIA-GIAO-DIEN.md`.
 
 ## Trang gọn để dễ đọc
 

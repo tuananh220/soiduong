@@ -129,7 +129,7 @@ export default function SectionNav() {
                 type="button"
                 onClick={() => setReduceEffects(!reduceEffects)}
                 aria-pressed={reduceEffects}
-                className={`focus-ring rounded-full border px-3 py-1.5 text-[11px] font-medium ${
+                className={`focus-ring min-h-[36px] rounded-full border px-3.5 py-2 text-[11px] font-medium ${
                   reduceEffects
                     ? "border-gold bg-gold/20 text-charcoal"
                     : "border-charcoal/20 text-charcoal/65"
@@ -143,7 +143,7 @@ export default function SectionNav() {
                   setOpen(false);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className="focus-ring ml-auto rounded-full border border-charcoal/20 px-3 py-1.5 text-[11px] text-charcoal/65"
+                className="focus-ring ml-auto min-h-[36px] rounded-full border border-charcoal/20 px-3.5 py-2 text-[11px] text-charcoal/70"
               >
                 ↑ Về đầu trang
               </button>
@@ -165,7 +165,7 @@ export default function SectionNav() {
             type="button"
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
-            className="focus-ring flex-1 truncate rounded-full px-2 py-1.5 text-center text-[12px] font-medium text-charcoal"
+            className="focus-ring min-h-[36px] flex-1 truncate rounded-full px-3 py-2 text-center text-[12px] font-medium text-charcoal"
           >
             <span className="text-charcoal/50">
               Mục {current + 1}/{SECTIONS.length} ·{" "}

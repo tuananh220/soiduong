@@ -17,6 +17,7 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { existsSync, statSync } from "node:fs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataDir = path.join(root, "data");
@@ -74,13 +75,14 @@ function checkQuote({ label, text, source, sourceUrl, level, note, requireUrl = 
 }
 
 async function main() {
-  const [topics, quotes, audit, ngôn, game, the] = await Promise.all([
+  const [topics, quotes, audit, ngôn, game, the, audio] = await Promise.all([
     loadJson("tu-tuong.json"),
     loadJson("quotes.json"),
     loadJson("citation-audit.json"),
     loadJson("nguon.json"),
     loadJson("trot-choi.json"),
     loadJson("kien-thuc-nen.json"),
+    loadJson("audio.json"),
   ]);
 
   const topicIds = new Set(topics.map((topic) => topic.id));
@@ -221,6 +223,34 @@ async function main() {
     }
   }
 
+  // Âm thanh: mọi clip phải có file thật trong public/ và ghi rõ phiên bản kịch bản
+  const audioEntries = Object.entries(audio ?? {});
+  for (const [key, clip] of audioEntries) {
+    if (!clip.file?.startsWith("/")) {
+      fail(`audio.json › ${key}: thiếu đường dẫn file trong public/`);
+      continue;
+    }
+    const absolute = path.join(root, "public", clip.file.replace(/^\//, ""));
+    if (!existsSync(absolute)) {
+      fail(`audio.json › ${key}: không tìm thấy file ${clip.file}`);
+      continue;
+    }
+    const size = statSync(absolute).size;
+    if (size < 1024) fail(`audio.json › ${key}: file ${clip.file} rỗng hoặc quá nhỏ (${size} byte)`);
+    if (!clip.scriptVersion) {
+      fail(`audio.json › ${key}: thiếu scriptVersion để biết khi nào cần thu lại`);
+    }
+    if (!Number.isFinite(clip.seconds) || clip.seconds <= 0) {
+      fail(`audio.json › ${key}: seconds phải là số dương`);
+    }
+    // Chất lượng tối thiểu 32 kbps (thoại mono vẫn nghe rõ); thấp hơn là dấu hiệu
+    // file bị nén quá mức hoặc khai sai thời lượng.
+    const impliedKbps = (size * 8) / clip.seconds / 1000;
+    if (Number.isFinite(clip.seconds) && clip.seconds > 0 && impliedKbps < 32) {
+      warn(`audio.json › ${key}: ~${impliedKbps.toFixed(0)} kbps cho ${clip.seconds}s — kiểm tra lại file/thời lượng`);
+    }
+  }
+
   // Báo cáo
   console.log("");
   console.log("── Kiểm chứng nội dung Soi Đường ──");
@@ -229,6 +259,7 @@ async function main() {
   console.log(`Câu trong trò chơi : ${(game.items ?? []).length}`);
   console.log(`Thẻ kiến thức nền  : ${(the ?? []).length}`);
   console.log(`Lộ trình           : ${loTrinh.length} ngày`);
+  console.log(`Clip âm thanh      : ${audioEntries.length}`);
   console.log(`Liên kết nguồn     : ${sourceUrls.size}${checkLinks ? ` (đã kiểm ${checkedLinks})` : ""}`);
 
   if (warnings.length) {

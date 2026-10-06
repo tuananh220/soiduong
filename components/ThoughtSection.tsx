@@ -88,9 +88,9 @@ function verdictClasses(entry: AuditEntry) {
     return "border-burgundy-light/50 bg-burgundy-light/10 text-burgundy-light";
   }
   if (entry.verdict === "dung-nguyen-van") {
-    return "border-gold/50 bg-gold/10 text-gold";
+    return "border-gold/50 bg-gold/10 text-gold-deep";
   }
-  return "border-gold/30 bg-cream/5 text-gold/85";
+  return "border-gold/30 bg-gold/10 text-gold-deep";
 }
 
 function QuoteRow({

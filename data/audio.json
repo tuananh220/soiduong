@@ -1,0 +1,23 @@
+{
+  "gioi-thieu": {
+    "id": "gioi-thieu",
+    "kind": "gioi-thieu",
+    "label": "Nghe giới thiệu trang",
+    "file": "/audio/gioi-thieu.mp3",
+    "seconds": 42,
+    "voice": "vi-VN, giọng nam (bản thu tạo sẵn)",
+    "scriptVersion": "timeline.json@13 mốc + tu-tuong.json@6 chuyên đề",
+    "note": "Kịch bản lấy nguyên văn các mốc đã kiểm duyệt: 1890 Kim Liên, 1911 bến Nhà Rồng, 1919 Yêu sách Versailles, 1930 thành lập Đảng, 1945 Tuyên ngôn Độc lập."
+  },
+  "mau-nam-bo-1946": {
+    "id": "mau-nam-bo-1946",
+    "kind": "trich-dan",
+    "label": "Nghe mẫu trích dẫn",
+    "file": "/audio/mau-nam-bo-1946.mp3",
+    "seconds": 16,
+    "voice": "vi-VN, giọng nam (bản thu tạo sẵn)",
+    "scriptVersion": "tu-tuong.json#doc-lap-cnxh/quotes[1]",
+    "quoteIndex": 1,
+    "note": "Nguyên văn: “Đồng bào Nam Bộ là dân nước Việt Nam. Sông có thể cạn, núi có thể mòn, song chân lý đó không bao giờ thay đổi.” — Thư gửi đồng bào Nam Bộ, Báo Cứu quốc số 255, ngày 1/6/1946."
+  }
+}

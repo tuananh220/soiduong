@@ -154,3 +154,25 @@ Bảng dưới đây tổng hợp mức độ nguyên văn của dữ liệu sau
 - “Đêm nay Bác không ngủ” — thơ Minh Huệ (1951), không phải lời của Bác.
 - Toàn văn Di chúc (công bố 1969):
   <http://hochiminh.vn/hoc-va-lam-theo-bac/di-chuc/toan-van-di-chuc-cua-chu-tich-ho-chiminh-cong-bo-nam-1969-109>
+
+## 7. Âm thanh: phạm vi kiểm duyệt
+
+Nguyên tắc: **âm thanh không phải một nguồn nội dung mới**, chỉ là cách đọc lại nội
+dung đã duyệt. Vì vậy kịch bản audio lấy nguyên văn từ `timeline.json`,
+`tu-tuong.json`, `citation-audit.json` — không thêm câu chữ nào chưa qua kiểm chứng.
+
+| Clip | Kịch bản lấy từ | Thời lượng | Ghi chú |
+|---|---|---|---|
+| `public/audio/gioi-thieu.mp3` | `timeline.json` (1890, 1911, 1919, 1930, 1945) | ~42 giây | Chỉ nêu mốc + địa điểm, không diễn giải thêm |
+| `public/audio/mau-nam-bo-1946.mp3` | `tu-tuong.json#doc-lap-cnxh/quotes[1]` | ~16 giây | Đọc nguyên văn + đọc luôn nguồn (Cứu quốc 255, 1/6/1946) |
+
+Quy trình khi thêm clip mới:
+
+1. Kịch bản chỉ được lấy từ dữ liệu đã có trong `data/` (không viết mới ngoài giáo trình).
+2. Ghi `scriptVersion` trỏ đúng mục nguồn trong `data/audio.json`.
+3. **Nghe lại toàn bộ** để soát tên riêng, năm tháng, số báo — TTS có thể đọc sai
+   ("Nhà Rồng", "Nghệ An", "Versailles", "Cứu quốc"). Câu nào đọc sai thì sửa kịch bản
+   hoặc thay từ đồng nghĩa trung tính rồi thu lại.
+4. `npm run verify:content` phải đạt (kiểm sự tồn tại của file, `scriptVersion`,
+   thời lượng, bitrate tối thiểu 32 kbps).
+5. Không đặt nội dung chỉ có trong audio: bản chữ tương ứng phải hiện trên trang.

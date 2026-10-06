@@ -7,6 +7,8 @@ import GenZCards from "@/components/GenZCards";
 import ChallengeSection from "@/components/ChallengeSection";
 import ScrollProgress from "@/components/ScrollProgress";
 import SectionNav from "@/components/SectionNav";
+import ListenButton from "@/components/ListenButton";
+import audioData from "@/data/audio.json";
 import { SECTIONS } from "@/lib/sections";
 import ThoughtSection from "@/components/ThoughtSection";
 import KnowledgeCards from "@/components/KnowledgeCards";
@@ -138,6 +140,29 @@ export default function Home() {
                 ))}
               </ul>
             </nav>
+
+            {/* Nghe thay vì đọc: bản thử nghiệm, không tự phát, bản chữ có sẵn trên trang. */}
+            <div className="w-full max-w-2xl">
+              <p className="text-[11px] font-semibold uppercase tracking-wideish text-charcoal/45">
+                Nghe thay vì đọc — bản thử nghiệm
+              </p>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                <ListenButton
+                  src={audioData["gioi-thieu"].file}
+                  label={audioData["gioi-thieu"].label}
+                  seconds={audioData["gioi-thieu"].seconds}
+                />
+                <ListenButton
+                  src={audioData["mau-nam-bo-1946"].file}
+                  label={audioData["mau-nam-bo-1946"].label}
+                  seconds={audioData["mau-nam-bo-1946"].seconds}
+                />
+              </div>
+              <p className="mt-2 text-[11px] leading-relaxed text-charcoal/55">
+                Giọng đọc nhân tạo từ kịch bản đã kiểm duyệt. Bản chữ đầy đủ vẫn nằm
+                ngay trên trang — không có nội dung nào chỉ tồn tại dưới dạng âm thanh.
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       </section>
@@ -150,7 +175,7 @@ export default function Home() {
       <RoadmapSection />
       <NotebookSection />
 
-      <footer className="bg-cream px-6 pb-24 pt-10 text-center text-xs leading-relaxed text-charcoal/55 sm:px-10 lg:px-16 lg:pb-10">
+      <footer className="bg-cream px-6 pb-24 pt-10 text-center text-xs leading-relaxed text-charcoal/65 sm:px-10 lg:px-16 lg:pb-10">
         <p>
           Soi Đường — dự án học liệu tương tác, xây dựng cho mục đích giáo dục.
         </p>
