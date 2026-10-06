@@ -1,11 +1,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Component, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useInView } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import topics from "@/data/tu-tuong.json";
 import audit from "@/data/citation-audit.json";
 import sources from "@/data/nguon.json";
+import ErrorBoundary from "@/lib/ErrorBoundary";
+import { useReduceEffects } from "@/lib/prefs";
+import { useInViewState } from "@/lib/useInViewState";
 import {
   removeFromNotebook,
   saveToNotebook,
@@ -25,22 +28,6 @@ const ThoughtLab3D = dynamic(() => import("./ThoughtLab3D"), {
     </div>
   ),
 });
-
-class LabErrorBoundary extends Component<
-  { children: ReactNode; fallback: ReactNode },
-  { hasError: boolean }
-> {
-  state = { hasError: false };
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  render() {
-    if (this.state.hasError) return this.props.fallback;
-    return this.props.children;
-  }
-}
 
 /** Lưới tĩnh: phương án dự phòng khi WebGL không chạy hoặc người dùng tắt 3D. */
 function StaticTopicGrid({
@@ -503,9 +490,16 @@ export default function ThoughtSection() {
   const [autoplay, setAutoplay] = useState(true);
   const [paused, setPaused] = useState(false);
   const [enable3D, setEnable3D] = useState(true);
+  const [readingDetail, setReadingDetail] = useState(false);
   const pauseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const labRef = useRef<HTMLDivElement>(null);
-  const labInView = useInView(labRef, { margin: "320px 0px" });
+  const reduceEffects = useReduceEffects();
+  // hasBeenInView: gắn WebGL một lần rồi giữ (không tháo ra khi cuộn qua lại).
+  // inView: chỉ dùng để tạm dừng vòng lặp render khi khuất tầm nhìn.
+  const {
+    ref: labRef,
+    inView: labInView,
+    hasBeenInView: labMounted,
+  } = useInViewState<HTMLDivElement>({ rootMargin: "320px 0px" });
   const { readTopics } = useNotebook();
 
   const activeTopic = topicList[activeIndex];
@@ -530,13 +524,29 @@ export default function ThoughtSection() {
     [],
   );
 
+  // Giảm hiệu ứng thì mặc định không tự xoay.
   useEffect(() => {
-    if (!autoplay || paused) return;
+    if (reduceEffects) setAutoplay(false);
+  }, [reduceEffects]);
+
+  // Tạm dừng khi tab bị ẩn để không "chạy" nội dung sau lưng người đọc.
+  useEffect(() => {
+    function onVisibility() {
+      if (document.hidden) pauseAutoplay();
+    }
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
+  useEffect(() => {
+    // Không tự chuyển khi người dùng đang đọc cột chi tiết hoặc đang ở tab khác.
+    if (!autoplay || paused || readingDetail) return;
+    if (typeof document !== "undefined" && document.hidden) return;
     const id = setInterval(() => {
       setActiveIndex((current) => (current + 1) % topicList.length);
     }, 7000);
     return () => clearInterval(id);
-  }, [autoplay, paused, topicList.length]);
+  }, [autoplay, paused, readingDetail, topicList.length]);
 
   return (
     <section id="tu-tuong" className="bg-cream-dim px-6 py-20 sm:px-10 lg:px-16">
@@ -570,6 +580,10 @@ export default function ThoughtSection() {
           Cuối mục là bảng kiểm chứng — nơi những câu hay bị gán sai cho Bác được
           chỉ ra cách dùng đúng.
         </motion.p>
+
+        <p className="sr-only" aria-live="polite">
+          Đang xem chuyên đề {activeIndex + 1} trên {topicList.length}: {activeTopic.title}
+        </p>
 
         <div className="mt-6 max-w-md">
           <div className="flex items-center justify-between text-xs text-charcoal/55">
@@ -617,8 +631,8 @@ export default function ThoughtSection() {
                   activeIndex={activeIndex}
                   onSelect={selectTopic}
                 />
-              ) : labInView ? (
-                <LabErrorBoundary
+              ) : labMounted ? (
+                <ErrorBoundary
                   fallback={
                     <StaticTopicGrid
                       topicList={topicList}
@@ -631,9 +645,10 @@ export default function ThoughtSection() {
                     topics={topicList}
                     activeIndex={activeIndex}
                     onSelectIndex={selectTopic}
+                    active={labInView}
                     className="h-full w-full"
                   />
-                </LabErrorBoundary>
+                </ErrorBoundary>
               ) : (
                 <LabSkeleton />
               )}
@@ -687,12 +702,18 @@ export default function ThoughtSection() {
                 {autoplay ? "⏸ Tạm dừng tự động xoay" : "▶ Bật tự động xoay"}
               </button>
               <span className="hidden sm:inline">
-                Mẹo: dùng ← → khi không gian 3D đang được chọn, hoặc kéo ngang bằng chuột.
+                Mẹo: dùng ← → khi không gian 3D đang được chọn, hoặc kéo ngang bằng
+                chuột — kéo dọc vẫn cuộn trang bình thường.
               </span>
             </div>
           </div>
 
-          <div className="lg:col-span-2">
+          <div
+            className="lg:col-span-2"
+            onPointerEnter={() => setReadingDetail(true)}
+            onPointerLeave={() => setReadingDetail(false)}
+            onFocusCapture={() => pauseAutoplay()}
+          >
             <DetailPanel
               topic={activeTopic}
               index={activeIndex}

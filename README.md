@@ -69,15 +69,22 @@ soiduong/
 ## Tương tác 3D và trải nghiệm người dùng
 
 - **Vòng xoay chuyên đề 3D** (`ThoughtLab3D.tsx`): sáu thẻ xếp trên vòng tròn,
-  kéo ngang để xoay, chạm để mở, tự động xoay (có nút tạm dừng), hỗ trợ phím ← →,
-  quầng sáng + Bloom nhấn thẻ đang chọn. Bật/tắt được 3D bằng một nút; khi WebGL
-  lỗi, error boundary tự chuyển sang lưới tĩnh.
+  kéo ngang để xoay (kéo dọc vẫn cuộn trang), chạm để mở, tự động xoay có nút tạm
+  dừng — tự dừng khi bạn đang đọc cột chi tiết, khi tab bị ẩn hoặc khi bật giảm
+  hiệu ứng. Hỗ trợ phím ← →, quầng sáng + Bloom nhấn thẻ đang chọn. Có nút tắt 3D;
+  khi WebGL lỗi, error boundary tự chuyển sang lưới tĩnh.
+- **Hero 3D** (`Hero3D.tsx`): kéo để xoay kèm quán tính, chạm để biểu tượng sáng
+  lên một nhịp, kèm nhánh dự phòng cho thiết bị không có WebGL.
 - **Chữ tiếng Việt trong WebGL**: thay vì nạp font 3D từ CDN, mỗi thẻ được vẽ
   bằng **Canvas API** rồi dùng làm `CanvasTexture` (font lấy từ token
   `--font-display` / `--font-body`), nên dấu tiếng Việt hiển thị đầy đủ và trang
   không phụ thuộc asset ngoài.
 - **Thẻ tilt 3D** ở phần Góc Gen Z dùng Pointer Events nên hoạt động cả với chuột,
   bút cảm ứng và ngón tay.
+- **Nút “Giảm hiệu ứng”** ở góc phải trang (`lib/prefs.ts`): tắt xoay tự động, hậu
+  kỳ Bloom và các chuyển động trang trí; lưu lựa chọn vào `localStorage` và phản
+  chiếu lên `<html data-reduce-effects>` để CSS tắt animation như khi hệ điều hành
+  yêu cầu. Mặc định bật theo `prefers-reduced-motion` của thiết bị.
 - **Sổ tay ôn tập**: lưu trích dẫn, việc nhỏ và ghi chú cá nhân vào `localStorage`,
   theo dõi tiến độ đọc, xuất file `.md`, sao chép Markdown hoặc in thành PDF. Toàn
   bộ dữ liệu nằm trên máy người đọc, không có backend.
@@ -99,7 +106,18 @@ soiduong/
   của `ThoughtSection` vẫn được render tĩnh để nội dung có trong HTML ban đầu và
   thân thiện với tìm kiếm.
 - **Lazy & Suspense**: mỗi Canvas dùng Suspense với trạng thái chờ bằng tiếng Việt;
-  `ThoughtLab3D` chỉ được gắn vào DOM khi khu vực đó sắp vào khung nhìn.
+  `ThoughtLab3D` chỉ được gắn vào DOM khi khu vực đó sắp vào khung nhìn, và **giữ
+  nguyên** sau đó (không tháo ra khi cuộn qua lại, tránh dựng lại texture và WebGL
+  context).
+- **Tạm dừng render theo tầm nhìn**: cả ba canvas đặt `frameloop={inView ? "always"
+  : "never"}` qua `lib/useInViewState.ts` (IntersectionObserver) và
+  `performance={{ min: 0.5 }}`, nên không vẽ 60 fps khi đã cuộn qua.
+- **Texture địa cầu nạp bằng `TextureLoader` + `loadAsync`** trong `useEffect` thay
+  vì `useLoader`: `useLoader` chạy qua `suspend-react`, tải lỗi sẽ ném lỗi trong
+  render phase và có thể làm hỏng cả trang. Nay CDN lỗi chỉ khiến quả cầu chuyển
+  sang bản dựng thủ tục, các mốc lịch sử vẫn hoạt động.
+- **`touch-action: pan-y`** cho canvas địa cầu (OrbitControls mặc định đặt
+  `touch-action: none` và chặn cuộn trang trên di động).
 - **`dpr={[1, 1.5]}`** giới hạn độ phân giải render; `ContactShadows` dùng
   `resolution={256}`; hậu kỳ tự tắt khi người dùng bật giảm chuyển động.
 - **Reduced motion**: `globals.css` tắt animation/transition khi người dùng bật

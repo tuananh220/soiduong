@@ -35,14 +35,12 @@ function QuoteCard({ quote }: { quote: (typeof quotes)[number] }) {
   }
 
   return (
-    <div className="flip-scene h-72 w-full">
-      <button
+    <div className="flip-scene relative h-72 w-full">
+      {/* Thẻ lật là <div>: bấm/kéo ở bất kỳ đâu cũng lật, còn các hành động bên
+          trong là <button> thật (không lồng nút trong nút như trước). */}
+      <div
         onClick={() => setFlipped((value) => !value)}
-        aria-pressed={flipped}
-        aria-label={`Lật thẻ trích dẫn: ${quote.front}`}
-        className={`focus-ring flip-card relative h-full w-full text-left ${
-          flipped ? "is-flipped" : ""
-        }`}
+        className={`flip-card absolute inset-0 ${flipped ? "is-flipped" : ""}`}
       >
         {/* Mặt trước */}
         <div className="flip-face absolute inset-0 flex flex-col justify-between rounded-2xl border border-gold/30 bg-gradient-to-br from-burgundy to-burgundy-deep p-6 shadow-gold">
@@ -59,42 +57,40 @@ function QuoteCard({ quote }: { quote: (typeof quotes)[number] }) {
               “{quote.front}”
             </p>
           </div>
-          <span className="text-xs uppercase tracking-wideish text-gold/80">
-            Chạm để xem nguồn và bài học
-          </span>
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setFlipped(true);
+            }}
+            aria-expanded={flipped}
+            className="focus-ring w-fit rounded-full border border-gold/50 px-3 py-1.5 text-[11px] font-medium text-gold transition-colors hover:bg-gold/10"
+          >
+            Xem nguồn &amp; bài học
+          </button>
         </div>
 
         {/* Mặt sau */}
         <div className="flip-face flip-face-back absolute inset-0 flex flex-col justify-between rounded-2xl border border-gold/40 bg-charcoal p-6">
           <div className="overflow-y-auto pr-1">
-            <p className="text-[10px] uppercase tracking-wideish text-gold/80">
-              Nguồn
-            </p>
+            <p className="text-[10px] uppercase tracking-wideish text-gold/80">Nguồn</p>
             <p className="mt-1 text-xs leading-relaxed text-cream/70">{quote.source}</p>
             <p className="mt-3 text-sm leading-relaxed text-cream/85">{quote.back}</p>
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span
-              role="button"
-              tabIndex={0}
+            <button
+              type="button"
               onClick={(event) => {
                 event.stopPropagation();
                 handleShare();
               }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  handleShare();
-                }
-              }}
               className="focus-ring w-fit rounded-full border border-gold/60 px-3 py-1.5 text-[11px] font-medium text-gold hover:bg-gold/10"
             >
-              {shared ? "Đã sao chép ✓" : "Chia sẻ / Lưu câu nói"}
-            </span>
-            <span
-              role="button"
-              tabIndex={0}
+              {shared ? "Đã sao chép ✓" : "Chia sẻ câu nói"}
+            </button>
+            <button
+              type="button"
+              aria-pressed={saved}
               onClick={(event) => {
                 event.stopPropagation();
                 if (saved) {
@@ -109,23 +105,6 @@ function QuoteCard({ quote }: { quote: (typeof quotes)[number] }) {
                   topicTitle: quote.topic,
                 });
               }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  if (saved) {
-                    removeFromNotebook(itemId);
-                    return;
-                  }
-                  saveToNotebook({
-                    id: itemId,
-                    kind: "quote",
-                    title: quote.front,
-                    source: quote.source,
-                    topicTitle: quote.topic,
-                  });
-                }
-              }}
               className={`focus-ring w-fit rounded-full border px-3 py-1.5 text-[11px] font-medium ${
                 saved
                   ? "border-gold bg-gold/20 text-cream"
@@ -133,10 +112,25 @@ function QuoteCard({ quote }: { quote: (typeof quotes)[number] }) {
               }`}
             >
               {saved ? "✓ Trong sổ tay" : "+ Sổ tay ôn tập"}
-            </span>
+            </button>
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setFlipped(false);
+              }}
+              className="focus-ring ml-auto text-[11px] text-cream/50 underline decoration-cream/20 underline-offset-4 hover:text-cream"
+            >
+              Lật lại
+            </button>
           </div>
         </div>
-      </button>
+      </div>
+
+      {/* Thông báo cho trình đọc màn hình khi thẻ được lật. */}
+      <span className="sr-only" aria-live="polite">
+        {flipped ? `Đã lật thẻ trích dẫn. Nguồn: ${quote.source}` : ""}
+      </span>
     </div>
   );
 }

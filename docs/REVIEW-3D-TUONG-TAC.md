@@ -160,3 +160,23 @@ kế), sau đó **5–7** (nâng cấp tương tác), cuối cùng **8–9** (tr
   nhân bẫy cuộn nằm ở OrbitControls, không phải ở R3F.
 - Không set `frameloop` ở bất kỳ `<Canvas>` nào trong dự án (đã grep toàn bộ
   `components/`).
+
+## 6. Trạng thái sau đợt sửa (nhóm 1–7)
+
+| # | Vấn đề | Trạng thái | Cách đã xử lý |
+| --- | --- | --- | --- |
+| 1 | Texture địa cầu từ CDN có thể làm hỏng cả trang (P0) | ✅ Đã sửa | Bỏ `useLoader` (suspend-react ném lỗi trong render), thay bằng `TextureLoader` + `loadAsync` trong `useEffect` (`useEarthTextures`). Khi lỗi chỉ đặt cờ và hiện **quả cầu dựng thủ tục** + ghi chú nhỏ; thêm `ErrorBoundary` dùng chung (`lib/ErrorBoundary.tsx`) quanh nội dung canvas |
+| 2 | Bẫy cuộn của OrbitControls trên di động (P1) | ✅ Đã sửa | Đặt lại `touch-action: pan-y` cho canvas (qua ref + lớp `.globe-canvas` trong CSS): vuốt dọc cuộn trang, kéo ngang xoay quả cầu, chụm hai ngón vẫn thu phóng |
+| 3 | Ba canvas render 60 fps kể cả khi khuất tầm nhìn (P1) | ✅ Đã sửa | `frameloop={inView ? "always" : "never"}` cho cả ba canvas qua `lib/useInViewState.ts` (IntersectionObserver), kèm `performance={{ min: 0.5 }}` |
+| 4 | Lab 3D bị tháo/dựng lại mỗi lần cuộn qua (P1) | ✅ Đã sửa | Tách `hasBeenInView` (gắn một lần rồi giữ) khỏi `inView` (chỉ tạm dừng vòng lặp render) |
+| 5 | Autoplay đổi nội dung khi đang đọc (P1) | ✅ Đã sửa | Tạm dừng khi trỏ vào cột chi tiết, khi có focus bàn phím trong đó, khi tab bị ẩn, và **mặc định tắt** khi bật giảm hiệu ứng |
+| 6 | `Hero3D` gần như tĩnh trên cảm ứng (P2) | ✅ Đã sửa | Kéo để xoay kèm quán tính, chạm để làm sáng biểu tượng, có `fallback` khi không có WebGL |
+| 7 | Thẻ nghiêng ở nơi không nên nghiêng (P2) | ✅ Đã sửa | Chỉ bật khi `(hover: hover) and (pointer: fine)` (`useCanHover`) và tắt khi giảm hiệu ứng |
+| 8 | Nút lồng nút trong thẻ trích dẫn (P2) | ✅ Đã sửa | Thẻ lật là `<div>` bấm được; các hành động (Xem nguồn, Chia sẻ, Lưu, Lật lại) là `<button>` thật; thêm `-webkit-backface-visibility` cho iOS |
+| 9 | Thiếu thông báo cho trình đọc màn hình (P2) | ✅ Đã sửa | Thêm vùng `aria-live="polite"` ở `GlobeSection`, `ThoughtSection` và `QuoteGallery` |
+| 10 | Chưa có công tắc giảm hiệu ứng chung (P3) | ✅ Đã sửa | Nút “Giảm hiệu ứng” ở góc phải (`lib/prefs.ts` + `ScrollProgress`), lưu vào `localStorage`, phản chiếu lên `<html data-reduce-effects>` để CSS tắt animation như khi OS yêu cầu |
+| 11 | Marker nhỏ cho ngón tay, hit-target (P3) | ⏳ Chưa làm | Cần đo trên thiết bị thật rồi chỉnh bán kính theo `pointer: coarse` |
+| 12 | Texture tự host trong `/public` (giảm phụ thuộc CDN) | ⏳ Đề xuất | Hiện đã an toàn khi CDN lỗi; tự host sẽ bỏ hẳn phụ thuộc mạng, đổi lại thêm ~2–3 MB ảnh vào repo |
+
+Ghi chú kiểm chứng: `npx tsc --noEmit`, `npm run lint` (chỉ còn cảnh báo `<img>` có sẵn ở
+`GlobeSection`) và `npm run build` đều chạy sạch sau đợt sửa.

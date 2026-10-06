@@ -1,12 +1,15 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, Line, OrbitControls, Stars } from "@react-three/drei";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import * as THREE from "three";
 import { TextureLoader } from "three";
 import timeline from "@/data/timeline.json";
+import ErrorBoundary from "@/lib/ErrorBoundary";
+import { useInViewState } from "@/lib/useInViewState";
+import { useReduceEffects } from "@/lib/prefs";
 
 type Milestone = (typeof timeline)[number];
 
@@ -147,18 +150,63 @@ function Marker({
   );
 }
 
+type EarthTextures = {
+  map: THREE.Texture;
+  normalMap: THREE.Texture;
+  specularMap: THREE.Texture;
+  cloud: THREE.Texture;
+};
+
+/**
+ * Nạp 4 texture vệ tinh bằng TextureLoader + async/await thay vì `useLoader`.
+ * `useLoader` chạy qua suspend-react, khi tải lỗi sẽ ném lỗi ngay trong render
+ * phase và có thể làm hỏng cả trang; cách này chỉ đặt cờ `failed` để chuyển sang
+ * quả cầu dựng thủ tục, các mốc lịch sử vẫn hoạt động bình thường.
+ */
+function useEarthTextures() {
+  const [textures, setTextures] = useState<EarthTextures | null>(null);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loader = new TextureLoader();
+    loader.setCrossOrigin("anonymous");
+
+    Promise.all([
+      loader.loadAsync(EARTH_TEXTURE),
+      loader.loadAsync(EARTH_NORMAL_TEXTURE),
+      loader.loadAsync(EARTH_SPECULAR_TEXTURE),
+      loader.loadAsync(CLOUD_TEXTURE),
+    ])
+      .then(([map, normalMap, specularMap, cloud]) => {
+        if (cancelled) {
+          [map, normalMap, specularMap, cloud].forEach((texture) => texture.dispose());
+          return;
+        }
+        setTextures({ map, normalMap, specularMap, cloud });
+      })
+      .catch(() => {
+        if (!cancelled) setFailed(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return { textures, failed };
+}
+
 function GlobeMesh({
   activeMilestone,
   onSelect,
+  textures,
 }: {
   activeMilestone: Milestone;
   onSelect: (m: Milestone) => void;
+  textures: EarthTextures | null;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const earthTexture = useLoader(TextureLoader, EARTH_TEXTURE);
-  const normalTexture = useLoader(TextureLoader, EARTH_NORMAL_TEXTURE);
-  const specularTexture = useLoader(TextureLoader, EARTH_SPECULAR_TEXTURE);
-  const cloudTexture = useLoader(TextureLoader, CLOUD_TEXTURE);
   const routePoints = useMemo(
     () =>
       timeline.map((milestone) =>
@@ -191,26 +239,38 @@ function GlobeMesh({
 
   return (
     <group ref={groupRef}>
-      {/* Textured earth with a subtle night-side material response. */}
+      {/* Trái đất: dùng ảnh vệ tinh khi tải được, nếu không thì dựng thủ tục. */}
       <mesh>
-        <sphereGeometry args={[RADIUS, 48, 48]} />
-        <meshPhongMaterial
-          map={earthTexture}
-          normalMap={normalTexture}
-          specularMap={specularTexture}
-          specular="#8da9c7"
-          shininess={10}
-        />
+        <sphereGeometry args={[RADIUS, textures ? 48 : 32, textures ? 48 : 32]} />
+        {textures ? (
+          <meshPhongMaterial
+            map={textures.map}
+            normalMap={textures.normalMap}
+            specularMap={textures.specularMap}
+            specular="#8da9c7"
+            shininess={10}
+          />
+        ) : (
+          <meshStandardMaterial
+            color="#24405f"
+            emissive="#0c1725"
+            emissiveIntensity={0.75}
+            roughness={0.85}
+            metalness={0.15}
+          />
+        )}
       </mesh>
-      <mesh scale={1.012}>
-        <sphereGeometry args={[RADIUS, 64, 64]} />
-        <meshPhongMaterial
-          map={cloudTexture}
-          transparent
-          opacity={0.38}
-          depthWrite={false}
-        />
-      </mesh>
+      {textures ? (
+        <mesh scale={1.012}>
+          <sphereGeometry args={[RADIUS, 64, 64]} />
+          <meshPhongMaterial
+            map={textures.cloud}
+            transparent
+            opacity={0.38}
+            depthWrite={false}
+          />
+        </mesh>
+      ) : null}
       <mesh scale={1.045}>
         <sphereGeometry args={[RADIUS, 64, 64]} />
         <meshBasicMaterial
@@ -261,9 +321,14 @@ export default function GlobeSection() {
   const [isPaused, setIsPaused] = useState(false);
   const [imageFailed, setImageFailed] = useState(false);
   const controlsRef = useRef<any>(null);
+  const globeWrapRef = useRef<HTMLDivElement | null>(null);
   const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const shouldReduceMotion = useReducedMotion();
+  const reduceEffects = useReduceEffects();
+  const { textures, failed: texturesFailed } = useEarthTextures();
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const { ref: globeObserverRef, inView: globeInView } = useInViewState<HTMLDivElement>({
+    rootMargin: "150px 0px",
+  });
   const periods = useMemo(
     () => ["Tất cả", ...Array.from(new Set(timeline.map((m) => m.period)))],
     [],
@@ -343,7 +408,39 @@ export default function GlobeSection() {
     [],
   );
 
+  /**
+   * three-stdlib/OrbitControls đặt `domElement.style.touchAction = "none"`
+   * (disable touch scroll) ngay khi được tạo, khiến người dùng không cuộn được
+   * trang khi đặt ngón tay vào khung địa cầu. Đổi lại thành "pan-y": vuốt dọc
+   * để cuộn trang, kéo ngang vẫn xoay quả cầu, chụm hai ngón vẫn thu phóng.
+   * Chờ một nhịp để OrbitControls kịp gắn DOM element.
+   */
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const element: HTMLElement | undefined =
+        controlsRef.current?.domElement ??
+        globeWrapRef.current?.querySelector("canvas") ??
+        undefined;
+      if (element) element.style.touchAction = "pan-y";
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Autoplay: advance one milestone every 4 s while not paused.
+  // Giảm hiệu ứng: tắt tự động chuyển mốc và tự xoay.
+  useEffect(() => {
+    if (reduceEffects) setAutoplayEnabled(false);
+  }, [reduceEffects]);
+
+  // Tạm dừng autoplay khi tab bị ẩn.
+  useEffect(() => {
+    function onVisibility() {
+      if (document.hidden) pauseGlobe();
+    }
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, []);
+
   useEffect(() => {
     if (!autoplayEnabled || isPaused) return;
     const id = setInterval(() => {
@@ -423,17 +520,26 @@ export default function GlobeSection() {
               />
             )}
           </div>
+          <p className="sr-only" aria-live="polite">
+            Đang xem mốc {active.year} tại {active.place}: {active.lesson}
+          </p>
         </div>
 
         <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-5">
           <div
-            className="relative h-[360px] rounded-2xl bg-black/20 sm:h-[440px] lg:col-span-3 lg:h-[480px]"
+            ref={(node) => {
+              globeWrapRef.current = node;
+              globeObserverRef.current = node;
+            }}
+            className="globe-canvas relative h-[360px] rounded-2xl bg-black/20 sm:h-[440px] lg:col-span-3 lg:h-[480px]"
             aria-label="Quả cầu 3D hiển thị các địa điểm trong hành trình"
             role="img"
           >
             <Canvas
               camera={{ position: [0, 0, 4.6], fov: 45 }}
               dpr={[1, 1.5]}
+              frameloop={globeInView ? "always" : "never"}
+              performance={{ min: 0.5 }}
               fallback={
                 <div className="flex h-full items-center justify-center p-6 text-center text-sm text-cream/60">
                   Thiết bị này không hỗ trợ bản đồ 3D. Hãy dùng danh sách mốc
@@ -451,26 +557,30 @@ export default function GlobeSection() {
               <Stars
                 radius={20}
                 depth={30}
-                count={900}
+                count={reduceEffects ? 260 : 900}
                 factor={1.8}
                 saturation={0}
                 fade
-                speed={0.25}
+                speed={reduceEffects ? 0 : 0.25}
               />
-              <Suspense
+              <ErrorBoundary
                 fallback={
                   <Html center>
-                    <div className="whitespace-nowrap rounded-full border border-gold/30 bg-charcoal/85 px-4 py-2 text-xs text-cream/75 shadow-lg">
-                      Đang tải địa cầu...
+                    <div className="max-w-[240px] rounded-xl border border-gold/30 bg-charcoal/90 px-4 py-3 text-center text-xs leading-relaxed text-cream/80 shadow-lg">
+                      Không gian 3D gặp lỗi. Danh sách mốc thời gian bên dưới vẫn
+                      đầy đủ nội dung.
                     </div>
                   </Html>
                 }
               >
-                <GlobeMesh
-                  activeMilestone={active}
-                  onSelect={selectMilestone}
-                />
-              </Suspense>
+                <Suspense fallback={null}>
+                  <GlobeMesh
+                    activeMilestone={active}
+                    onSelect={selectMilestone}
+                    textures={textures}
+                  />
+                </Suspense>
+              </ErrorBoundary>
               <OrbitControls
                 ref={controlsRef}
                 enablePan={false}
@@ -479,12 +589,18 @@ export default function GlobeSection() {
                 maxDistance={6.2}
                 minPolarAngle={Math.PI / 3}
                 maxPolarAngle={(2 * Math.PI) / 3}
-                autoRotate={!shouldReduceMotion && !isPaused}
+                autoRotate={!reduceEffects && !isPaused && globeInView}
                 autoRotateSpeed={0.5}
                 onStart={pauseGlobe}
                 onEnd={pauseGlobe}
               />
             </Canvas>
+            {texturesFailed ? (
+              <p className="pointer-events-none absolute left-3 top-3 max-w-[240px] rounded-lg border border-gold/25 bg-charcoal/85 px-3 py-2 text-[11px] leading-relaxed text-cream/70 backdrop-blur-sm">
+                Ảnh vệ tinh không tải được — đang dùng quả cầu dựng thủ tục. Các mốc
+                lịch sử vẫn hoạt động bình thường.
+              </p>
+            ) : null}
             <div
               className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2"
               aria-label="Điều khiển quả địa cầu"

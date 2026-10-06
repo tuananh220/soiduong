@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { ContactShadows, RoundedBox, Sparkles } from "@react-three/drei";
 import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
-import { useReducedMotion } from "framer-motion";
+import { useReduceEffects } from "@/lib/prefs";
 import * as THREE from "three";
 import type { Topic } from "@/lib/types";
 
@@ -416,6 +416,8 @@ type ThoughtLab3DProps = {
   activeIndex: number;
   onSelectIndex: (index: number) => void;
   className?: string;
+  /** Khu vực có đang trong khung nhìn — dùng để tạm dừng vòng lặp render. */
+  active?: boolean;
 };
 
 export default function ThoughtLab3D({
@@ -424,59 +426,88 @@ export default function ThoughtLab3D({
   activeIndex,
   onSelectIndex,
   className,
+  active = true,
 }: ThoughtLab3DProps) {
-  const shouldReduceMotion = Boolean(useReducedMotion());
+  const reduceEffects = useReduceEffects();
+  const shouldReduceMotion = reduceEffects;
   const dragRef = useRef<{ offset: number }>({ offset: 0 });
-  const pointerStart = useRef({ x: 0, index: 0, active: false, moved: 0 });
+  const dragState = useRef({ startX: 0, startIndex: 0, moved: 0, active: false });
   const [dragging, setDragging] = useState(false);
   const ring = ringTopics ?? topics;
   const textures = useCardTextures(ring);
   const step = (Math.PI * 2) / ring.length;
+  const activeIndexRef = useRef(activeIndex);
+  const selectRef = useRef(onSelectIndex);
+  const ringLengthRef = useRef(ring.length);
+  const stepRef = useRef(step);
 
+  useEffect(() => {
+    activeIndexRef.current = activeIndex;
+  }, [activeIndex]);
+  useEffect(() => {
+    selectRef.current = onSelectIndex;
+  }, [onSelectIndex]);
+  useEffect(() => {
+    ringLengthRef.current = ring.length;
+    stepRef.current = step;
+  }, [ring.length, step]);
+
+  /**
+   * Kéo bằng listener trên window thay vì pointer capture: capture sẽ chặn R3F
+   * nhận sự kiện click trên thẻ, còn cách này giữ nguyên click và vẫn cho phép
+   * kéo ra ngoài khung.
+   */
   function handlePointerDown(event: React.PointerEvent<HTMLDivElement>) {
-    pointerStart.current = {
-      x: event.clientX,
-      index: activeIndex,
-      active: true,
+    if (event.button !== 0 && event.pointerType === "mouse") return;
+    dragState.current = {
+      startX: event.clientX,
+      startIndex: activeIndexRef.current,
       moved: 0,
+      active: true,
     };
     setDragging(true);
-  }
 
-  function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
-    const start = pointerStart.current;
-    if (!start.active) return;
-    const dx = event.clientX - start.x;
-    start.moved = Math.max(start.moved, Math.abs(dx));
-    dragRef.current.offset = -dx * RAD_PER_PX;
-  }
+    function onMove(moveEvent: PointerEvent) {
+      const state = dragState.current;
+      if (!state.active) return;
+      const dx = moveEvent.clientX - state.startX;
+      state.moved = Math.max(state.moved, Math.abs(dx));
+      dragRef.current.offset = -dx * RAD_PER_PX;
+    }
 
-  function endDrag(event: React.PointerEvent<HTMLDivElement>) {
-    const start = pointerStart.current;
-    if (!start.active) return;
-    start.active = false;
-    setDragging(false);
-    dragRef.current.offset = 0;
-    if (start.moved < 24) return; // cú chạm ngắn: để R3F xử lý chọn thẻ
-    const delta = event.clientX - start.x;
-    const shift = Math.round((delta * RAD_PER_PX) / step);
-    const next = ((start.index + shift) % ring.length + ring.length) % ring.length;
-    if (next !== start.index) onSelectIndex(next);
+    function onUp(upEvent: PointerEvent) {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      window.removeEventListener("pointercancel", onUp);
+      const state = dragState.current;
+      if (!state.active) return;
+      state.active = false;
+      setDragging(false);
+      dragRef.current.offset = 0;
+      if (state.moved < 24) return; // cú chạm ngắn: để R3F xử lý chọn thẻ
+      const delta = upEvent.clientX - state.startX;
+      const shift = Math.round((delta * RAD_PER_PX) / stepRef.current);
+      const total = ringLengthRef.current;
+      const next = (((state.startIndex + shift) % total) + total) % total;
+      if (next !== state.startIndex) selectRef.current(next);
+    }
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+    window.addEventListener("pointercancel", onUp);
   }
 
   return (
     <div
       className={`relative ${className ?? ""}`}
       onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={endDrag}
-      onPointerLeave={endDrag}
-      onPointerCancel={endDrag}
       style={{ touchAction: "pan-y", cursor: dragging ? "grabbing" : "grab" }}
     >
       <Canvas
         camera={{ position: [0, 0.35, 7.1], fov: 42 }}
         dpr={[1, 1.5]}
+        frameloop={active ? "always" : "never"}
+        performance={{ min: 0.5 }}
         gl={{ alpha: true, antialias: true }}
         fallback={
           <div className="flex h-full items-center justify-center p-6 text-center text-sm text-cream/60">
@@ -519,7 +550,7 @@ export default function ThoughtLab3D({
             resolution={256}
           />
         </Suspense>
-        {!shouldReduceMotion && (
+        {!reduceEffects && (
           <EffectComposer multisampling={0}>
             <Bloom
               intensity={0.62}

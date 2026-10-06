@@ -4,11 +4,17 @@ import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import cards from "@/data/genz-cards.json";
 import { removeFromNotebook, saveToNotebook, useNotebook } from "@/lib/notebook";
+import { useCanHover, useReduceEffects } from "@/lib/prefs";
 
 function TiltCard({ card }: { card: (typeof cards)[number] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState(false);
   const { items } = useNotebook();
+  // Chỉ nghiêng thẻ khi có con trỏ chính xác (chuột/bút) và không bật giảm hiệu ứng:
+  // trên cảm ứng, nghiêng theo ngón tay khi cuộn gây cảm giác "trôi" khó chịu.
+  const canHover = useCanHover();
+  const reduceEffects = useReduceEffects();
+  const tiltEnabled = canHover && !reduceEffects;
   const itemId = `genz-${card.id}`;
   const saved = items.some((item) => item.id === itemId);
 
@@ -25,8 +31,8 @@ function TiltCard({ card }: { card: (typeof cards)[number] }) {
   const glowX = useTransform(mx, [-0.5, 0.5], ["20%", "80%"]);
   const glowY = useTransform(my, [-0.5, 0.5], ["20%", "80%"]);
 
-  // Pointer Events dùng chung cho chuột, bút cảm ứng và ngón tay.
   function handleMove(event: React.PointerEvent<HTMLDivElement>) {
+    if (!tiltEnabled) return;
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     mx.set((event.clientX - rect.left) / rect.width - 0.5);
@@ -137,8 +143,8 @@ export default function GenZCards() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.15 }}
         >
-          Di chuột hoặc kéo nhẹ trên thẻ để nghiêng theo hướng tay — mỗi thẻ là một
-          cách chuyển giá trị cũ thành thói quen mới.
+          Trên máy tính, di chuột qua thẻ để thẻ nghiêng nhẹ theo hướng tay — mỗi thẻ
+          là một cách chuyển giá trị cũ thành thói quen mới.
         </motion.p>
 
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
