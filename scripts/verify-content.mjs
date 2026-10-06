@@ -75,7 +75,7 @@ function checkQuote({ label, text, source, sourceUrl, level, note, requireUrl = 
 }
 
 async function main() {
-  const [topics, quotes, audit, ngôn, game, the, audio] = await Promise.all([
+  const [topics, quotes, audit, ngôn, game, the, audio, audioGoc] = await Promise.all([
     loadJson("tu-tuong.json"),
     loadJson("quotes.json"),
     loadJson("citation-audit.json"),
@@ -83,6 +83,7 @@ async function main() {
     loadJson("trot-choi.json"),
     loadJson("kien-thuc-nen.json"),
     loadJson("audio.json"),
+    loadJson("audio-goc.json"),
   ]);
 
   const topicIds = new Set(topics.map((topic) => topic.id));
@@ -251,6 +252,33 @@ async function main() {
     }
   }
 
+  // Tiếng nói gốc: chỉ được liên kết tới kho lưu trữ chính thức, và phải có ghi chú
+  // phân biệt tiếng nói của Người với lời bình/trích đoạn trong phim tài liệu.
+  const OFFICIAL_HOSTS = ["hochiminh.vn", "dangcongsan.vn", "vov.vn", "nhandan.vn", "baotanghochiminh.vn"];
+  for (const entry of audioGoc ?? []) {
+    const label = `audio-goc.json › ${entry.id ?? "(thiếu id)"}`;
+    if (!entry.id) fail("audio-goc.json: có mục thiếu id");
+    if (!["audio", "video"].includes(entry.kind)) {
+      fail(`${label}: kind phải là "audio" hoặc "video"`);
+    }
+    if (!["giong-nguoi", "co-trich-doan"].includes(entry.voice)) {
+      fail(`${label}: voice phải là "giong-nguoi" hoặc "co-trich-doan"`);
+    }
+    if (!entry.note?.trim()) fail(`${label}: thiếu note (ghi chú kiểm chứng)`);
+    if (!entry.event?.trim()) fail(`${label}: thiếu event (bối cảnh)`);
+    if (!entry.archive?.trim()) fail(`${label}: thiếu archive (đơn vị lưu trữ)`);
+    if (!URL_PATTERN.test(entry.referenceUrl ?? "")) {
+      fail(`${label}: referenceUrl phải là https tuyệt đối`);
+      continue;
+    }
+    const host = new URL(entry.referenceUrl).hostname;
+    const official = OFFICIAL_HOSTS.some((allowed) => host === allowed || host.endsWith(`.${allowed}`)) ||
+      host.endsWith(".gov.vn");
+    if (!official) {
+      fail(`${label}: chỉ được trỏ tới kho lưu trữ chính thức, đang trỏ ${host}`);
+    }
+  }
+
   // Báo cáo
   console.log("");
   console.log("── Kiểm chứng nội dung Soi Đường ──");
@@ -260,6 +288,7 @@ async function main() {
   console.log(`Thẻ kiến thức nền  : ${(the ?? []).length}`);
   console.log(`Lộ trình           : ${loTrinh.length} ngày`);
   console.log(`Clip âm thanh      : ${audioEntries.length}`);
+  console.log(`Tiếng nói gốc      : ${(audioGoc ?? []).length} liên kết chính thức`);
   console.log(`Liên kết nguồn     : ${sourceUrls.size}${checkLinks ? ` (đã kiểm ${checkedLinks})` : ""}`);
 
   if (warnings.length) {

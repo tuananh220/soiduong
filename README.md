@@ -30,6 +30,7 @@ soiduong/
 │   ├── ThoughtLab3D.tsx    #   3D: vòng xoay thẻ chuyên đề (CanvasTexture + Bloom)
 │   ├── QuoteSource.tsx     #   Nguồn trích dẫn + link tra cứu
 │   ├── ListenButton.tsx    #   Nút nghe dùng chung (không tự phát, chỉ một clip phát một lúc)
+│   ├── VoiceArchive.tsx    #   Tiếng nói thật của Bác Hồ: 11 liên kết tới kho lưu trữ chính thức
 │   ├── KnowledgeCards.tsx  # SECTION 4 — 12 thẻ kiến thức nền (hiện 6 thẻ, có nút xem thêm)
 │   ├── GenZCards.tsx       # SECTION 5 — thẻ tilt 3D bài học Gen Z
 │   ├── ChallengeSection.tsx# Bọc QuizGame + CitationGame + QuoteGallery
@@ -50,6 +51,7 @@ soiduong/
 │   ├── kien-thuc-nen.json  # 12 thẻ flashcard: định nghĩa, cơ sở, 5 thời kỳ, giá trị
 │   ├── lo-trinh.json       # Lộ trình 7 ngày (mỗi ngày 1 chuyên đề + việc nhỏ)
 │   ├── audio.json          # 2 clip thử nghiệm: file, thời lượng, scriptVersion để biết khi nào thu lại
+│   ├── audio-goc.json      # 11 tư liệu gốc có tiếng nói của Người (chỉ liên kết, không sao chép tệp)
 │   ├── nguon.json          # Chính sách nội dung, tư liệu đối chiếu, giấy phép tài sản
 │   ├── timeline.json       # 13 mốc lịch sử từ 1890 đến 1990
 │   ├── genz-cards.json     # Nội dung 3 thẻ bài học
@@ -159,6 +161,30 @@ soiduong/
   `scriptVersion`, thời lượng hợp lệ và bitrate tối thiểu 32 kbps.
 - Lộ trình mở rộng (ôn tập bằng tai, âm phản hồi trong game, podcast nhiều giọng) và
   số đo giao diện đầy đủ: xem `docs/DANH-GIA-GIAO-DIEN.md`.
+
+### Tiếng nói thật của Bác Hồ — chỉ liên kết, không sao chép
+
+`data/audio-goc.json` + `components/VoiceArchive.tsx` liệt kê **11 tư liệu gốc** do
+Người trực tiếp nói, kèm liên kết tới kho lưu trữ chính thức (hochiminh.vn — Văn
+phòng Trung ương Đảng):
+
+- **Bản ghi âm tiếng nói** (7): Tuyên ngôn Độc lập, Lời kêu gọi toàn quốc kháng chiến
+  1946, Lời kêu gọi chống Mỹ cứu nước 17/7/1966, Diễn văn Đại hội III 1960, mít tinh
+  31/12/1959, chúc Tết Mậu Thân 1968 và Kỷ Dậu 1969.
+- **Phim tư liệu** (4): *Hình ảnh về đời hoạt động của Hồ Chủ tịch* (1960),
+  *Nguyễn Ái Quốc – Hồ Chí Minh* (1974), *Hồ Chí Minh – Chân dung một con người* (1990),
+  *Những giờ phút cuối đời Bác Hồ* (1990).
+
+Ba nguyên tắc bắt buộc:
+
+1. **Không sao chép tệp về máy chủ của trang** — chỉ mở tại nguồn: tôn trọng bản quyền
+   của đơn vị lưu trữ và tránh các bản gán sai sự kiện, bản AI nhái giọng đang lan truyền.
+2. **Không tạo giọng AI nhái giọng Bác Hồ** dưới bất kỳ hình thức nào. Hai clip trong
+   `public/audio/` là giọng tổng hợp đọc lại kịch bản đã kiểm duyệt, và được ghi nhãn
+   rõ như vậy ngay trên giao diện.
+3. **Phân biệt rõ hai loại**: `"voice": "giong-nguoi"` (bản ghi âm tiếng nói của Người)
+   và `"voice": "co-trich-doan"` (phim tài liệu có trích đoạn, phần còn lại là lời bình).
+   `npm run verify:content` chặn mọi liên kết không thuộc danh sách nguồn chính thức.
 
 ## Trang gọn để dễ đọc
 

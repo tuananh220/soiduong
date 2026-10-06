@@ -8,6 +8,7 @@ import ChallengeSection from "@/components/ChallengeSection";
 import ScrollProgress from "@/components/ScrollProgress";
 import SectionNav from "@/components/SectionNav";
 import ListenButton from "@/components/ListenButton";
+import VoiceArchive from "@/components/VoiceArchive";
 import audioData from "@/data/audio.json";
 import { SECTIONS } from "@/lib/sections";
 import ThoughtSection from "@/components/ThoughtSection";
@@ -163,6 +164,9 @@ export default function Home() {
                 ngay trên trang — không có nội dung nào chỉ tồn tại dưới dạng âm thanh.
               </p>
             </div>
+
+            {/* Tiếng nói gốc: chỉ liên kết, không sao chép tệp về trang. */}
+            <VoiceArchive />
           </motion.div>
         </motion.div>
       </section>

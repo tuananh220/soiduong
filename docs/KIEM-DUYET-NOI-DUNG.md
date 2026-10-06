@@ -176,3 +176,50 @@ Quy trình khi thêm clip mới:
 4. `npm run verify:content` phải đạt (kiểm sự tồn tại của file, `scriptVersion`,
    thời lượng, bitrate tối thiểu 32 kbps).
 5. Không đặt nội dung chỉ có trong audio: bản chữ tương ứng phải hiện trên trang.
+
+## 8. Tiếng nói gốc của Bác Hồ — nguyên tắc và các bẫy gán sai
+
+### 8.1 Bẫy thường gặp (đã xác minh)
+
+| Cách gán sai | Sự thật | Nguồn |
+|---|---|---|
+| “Băng ghi âm Bác đọc Tuyên ngôn Độc lập thu tại Ba Đình ngày 2/9/1945” | Bản đang nghe được **thu lại trong phòng thu của Đài Tiếng nói Việt Nam sau 1954** (đồng chí Trần Lâm mời Người đọc lại). Vì vậy trong băng **không có** câu “Đồng bào có nghe rõ không?” | htv.vn, “Về một câu nói của Bác Hồ không có trong băng ghi âm” (2/9/2018) |
+| Gộp lễ kỷ niệm 30 năm thành lập Đảng với câu “Đảng ta là đạo đức, là văn minh” (3/1/1960) | Kho lưu trữ ghi bản ghi âm phát biểu tại **Lễ kỷ niệm 30 năm thành lập Đảng ngày 5/1/1960** — là **một tư liệu khác**, không đồng nhất với câu đã kiểm chứng ở mục 3 | hochiminh.vn — Tư liệu Audio |
+| Gán mọi clip “giọng Bác” trên mạng cho tư liệu gốc | Rất nhiều clip là **giọng AI nhái** hoặc giọng người đọc lại. Không có cách kiểm chứng nào ngoài việc đối chiếu kho lưu trữ chính thức | — |
+
+### 8.2 Nguyên tắc áp dụng trong mã nguồn
+
+1. Chỉ liên kết tới nguồn chính thức: `hochiminh.vn`, `dangcongsan.vn`, `vov.vn`,
+   `nhandan.vn`, `baotanghochiminh.vn` hoặc tên miền `*.gov.vn`. `verify:content` **chặn**
+   mọi liên kết khác (đã thử nghiệm: trỏ sang youtube.com → báo lỗi ngay).
+2. Không lưu tệp audio/video gốc trong `public/` — tránh rủi ro bản quyền và tránh
+   phát tán bản sao không kiểm soát được.
+3. **Không dùng giọng AI nhái giọng Bác Hồ.** Hai clip thử nghiệm trong `public/audio/`
+   là giọng tổng hợp đọc lại kịch bản lấy nguyên văn từ dữ liệu đã duyệt, và trên giao
+   diện ghi rõ “giọng đọc nhân tạo… không phải giọng Người”.
+4. Mỗi mục phải có `note`: với phim tài liệu thì nói rõ phần nào là tư liệu, phần nào là
+   lời bình (`"voice": "co-trich-doan"`).
+
+### 8.3 Danh sách đã đối chiếu (07-10-2026)
+
+Lấy trực tiếp từ hai trang mục lục chính thức `hochiminh.vn/tu-lieu-audio` và
+`hochiminh.vn/tu-lieu-video`:
+
+- **7 bản ghi âm tiếng nói**: Tuyên ngôn Độc lập (thu sau 1954) · Lời kêu gọi toàn quốc
+  kháng chiến 19/12/1946 · Lời kêu gọi chống Mỹ cứu nước 17/7/1966 · Diễn văn khai mạc
+  Đại hội III (1960) · Mít tinh 31/12/1959 sau khi Quốc hội khóa I thông qua Hiến pháp ·
+  Chúc Tết Mậu Thân 1968 · Chúc Tết Kỷ Dậu 1969.
+- **4 phim tư liệu**: *Hình ảnh về đời hoạt động của Hồ Chủ tịch* (1960, phim tài liệu
+  đầu tiên về chân dung Người) · *Nguyễn Ái Quốc – Hồ Chí Minh* (1974) ·
+  *Hồ Chí Minh – Chân dung một con người* (1990) · *Những giờ phút cuối đời Bác Hồ* (1990).
+- Kho còn rất nhiều mục chưa đưa vào (chúc Tết 1955–1968, Đại hội Phụ nữ 9/3/1960…);
+  danh sách rút gọn để trang không dài thêm, ai cần xem đủ thì theo liên kết “toàn bộ kho”.
+
+### 8.4 Ghi chú nghiên cứu (chưa liên kết được)
+
+Thước phim **màu có tiếng đồng bộ** quay cảnh Người trò chuyện vẫn tồn tại, đáng chú ý
+nhất là *Cuộc gặp gỡ Hồ Chủ tịch* (1969, 8 phút) của Joris Ivens và *Đàm thoại với Chủ
+tịch Hồ Chí Minh* (1968) — theo Viện phim Việt Nam, đây là những thước phim nước ngoài
+cuối cùng ghi được hình **và tiếng** của Người. Hiện chưa có nguồn phát trực tuyến chính
+thức nên trang chỉ ghi lại đây như một đầu mối; nếu xin được quyền truy cập hợp pháp thì
+đó là tư liệu giá trị nhất để bổ sung.
